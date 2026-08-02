@@ -1,0 +1,6 @@
+{
+  "src": [
+    "pages/OSSLibrariesLicenseListPage",
+    "pages/OSSLibrariesLicenseDetailPage"
+  ]
+}

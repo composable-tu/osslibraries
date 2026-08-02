@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.18.0",
+      "onFail": "download"
+    }
+  },
+  "devDependencies": {
+    "osslibraries-hvigor-plugin": "^0.0.2"
+  }
+}

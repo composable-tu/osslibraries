@@ -1,0 +1,44 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "OSSLibraries"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "OSSLibraries"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "OSSLibraries"
+    },
+    {
+      "name": "entry_title",
+      "value": "OSSLibraries"
+    },
+    {
+      "name": "entry_tagline",
+      "value": "Open Source License Scanner & Viewer for HarmonyOS"
+    },
+    {
+      "name": "entry_feature_scan_title",
+      "value": "Generate License Metadata at Build Time"
+    },
+    {
+      "name": "entry_feature_scan_desc",
+      "value": "A Hvigor plugin walks the project's OHPM dependencies at build time, generates license metadata, and bundles it into the app package. No filesystem permission is required at runtime."
+    },
+    {
+      "name": "entry_feature_ui_title",
+      "value": "Ready-to-use UI"
+    },
+    {
+      "name": "entry_feature_ui_desc",
+      "value": "Ready-to-use license list and detail pages built with ArkUI and the UI Design Kit."
+    },
+    {
+      "name": "entry_button_view",
+      "value": "Open Source Licenses"
+    }
+  ]
+}

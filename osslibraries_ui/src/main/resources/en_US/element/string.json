@@ -1,0 +1,24 @@
+{
+  "string": [
+    {
+      "name": "osslibraries_title_licenses",
+      "value": "Open Source Licenses"
+    },
+    {
+      "name": "osslibraries_loading",
+      "value": "Loading..."
+    },
+    {
+      "name": "osslibraries_load_failed",
+      "value": "Failed to load: %s"
+    },
+    {
+      "name": "osslibraries_library_not_found",
+      "value": "Library not found."
+    },
+    {
+      "name": "osslibraries_license_detail",
+      "value": "License Detail"
+    }
+  ]
+}

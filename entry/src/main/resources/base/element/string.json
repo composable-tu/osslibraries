@@ -1,0 +1,44 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "OSSLibraries"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "OSSLibraries"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "OSSLibraries"
+    },
+    {
+      "name": "entry_title",
+      "value": "OSSLibraries"
+    },
+    {
+      "name": "entry_tagline",
+      "value": "适用于 HarmonyOS 的开放源代码许可扫描与展示库"
+    },
+    {
+      "name": "entry_feature_scan_title",
+      "value": "构建时生成许可元数据"
+    },
+    {
+      "name": "entry_feature_scan_desc",
+      "value": "基于 Hvigor 插件机制，在构建时遍历项目 OHPM 依赖，生成 License Meta Data 并打包进应用包。应用运行时无需文件系统权限。"
+    },
+    {
+      "name": "entry_feature_ui_title",
+      "value": "开箱即用 UI"
+    },
+    {
+      "name": "entry_feature_ui_desc",
+      "value": "使用 ArkUI 及 UI Design Kit 构建开箱即用的 License 列表与详情页。"
+    },
+    {
+      "name": "entry_button_view",
+      "value": "开放源代码许可"
+    }
+  ]
+}
