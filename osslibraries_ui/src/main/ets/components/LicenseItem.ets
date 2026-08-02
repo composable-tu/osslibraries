@@ -63,7 +63,11 @@ export struct LicenseItem {
 
           // 许可证徽章
           ForEach(this.lib.licenses, (lic: License) => {
-            Text(lic.name)
+            Text(
+              lic.name.length > 0
+                ? lic.name
+                : (lic.spdxId && lic.spdxId.length > 0 ? lic.spdxId : lic.hash)
+            )
               .fontSize(11)
               .fontColor($r('sys.color.brand'))
               .backgroundColor($r('sys.color.ohos_id_select_selected_color'))
