@@ -44,7 +44,7 @@
         }
       ]
     },
-    {
+    { // 构建 osslibraries_ui 时需要去掉 osslibraries 的构建数组
       "name": "osslibraries",
       "srcPath": "./osslibraries",
     },

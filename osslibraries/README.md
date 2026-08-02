@@ -1,6 +1,11 @@
 # OSSLibraries
 
-一个适用于 HarmonyOS 的开放源代码许可扫描与展示库。
+一个适用于 HarmonyOS 的开放源代码许可扫描与展示库 —— 该包是 OSSLibraries 的 Core 部分。
+
+<!-- OHPM 的审核您好，OSSLibraries 的 OHPM 库包含 `osslibraries` 部分和 `osslibraries_ui` 部分，前者定义了 OSSLibraries 的数据解析部分，后者基于前者实现了 OSSLibraries 的预设展示页。README 是面向使用 OSSLibraries 整个库的应用开发者的介绍文档，包含 `osslibraries` 部分和 `osslibraries_ui` 部分的介绍说明。因此 README 并没有与 Har 文件货不对板。如您有任何疑问，欢迎前往 GitHub 查看具体的代码实现：
+
+- https://github.com/composable-tu/osslibraries
+- https://github.com/composable-tu/osslibraries-hvigor-plugin -->
 
 ## 快速接入（带预定义 UI）
 
