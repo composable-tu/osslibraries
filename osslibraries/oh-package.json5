@@ -1,6 +1,6 @@
 {
   "name": "osslibraries",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "适用于 HarmonyOS 的开放源代码许可扫描与展示库 —— 该包是 OSSLibraries 的 Core 部分。",
   "main": "Index.ets",
   "author": {
