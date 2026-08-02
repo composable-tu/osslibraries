@@ -10,6 +10,13 @@ An open source license scanning and display library for HarmonyOS.
 
 ## Quick Start (with predefined UI)
 
+> [!TIP]
+> You can install the Agent Skills provided by this library to let an AI Agent help integrate it into your HarmonyOS project quickly:
+>
+> ```zsh
+> npx skills add composable-tu/osslibraries
+> ```
+
 ### Add OHPM dependency
 
 ```zsh

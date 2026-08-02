@@ -4,6 +4,13 @@
 
 ## 快速接入（带预定义 UI）
 
+> [!TIP]
+> 可以安装该库提供的 Agent Skills，让 AI Agent 帮助快速在 HarmonyOS 项目中集成该库：
+>
+> ```zsh
+> npx skills add composable-tu/osslibraries
+> ```
+
 ### 添加 OHPM 模块依赖
 
 ```zsh
