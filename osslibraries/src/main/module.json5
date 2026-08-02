@@ -1,0 +1,9 @@
+{
+  "module": {
+    "name": "osslibraries",
+    "type": "har",
+    "deviceTypes": [
+      "default"
+    ]
+  }
+}
