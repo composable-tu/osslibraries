@@ -67,12 +67,16 @@ export struct OSSLibrariesLicenseDetailPage {
             }, 1)
           }
 
-          // 许可证全文
-          ForEach(this.lib.licenses, (lic: License) => {
-            ListItem() {
-              this.LicenseContent(lic)
-            }
-          }, (lic: License) => lic.hash)
+          // 许可证全文（仅渲染有正文内容的许可证）
+          ForEach(
+            this.lib.licenses.filter((lic: License) => lic.licenseContent && lic.licenseContent.length > 0),
+            (lic: License) => {
+              ListItem() {
+                this.LicenseContent(lic)
+              }
+            },
+            (lic: License) => lic.hash
+          )
 
           // 底部留白
           ListItem() {
