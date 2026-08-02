@@ -46,9 +46,9 @@
     },
     {
       "uniqueId": "osslibraries",
-      "artifactVersion": "0.0.2",
+      "artifactVersion": "0.0.1",
       "name": "osslibraries",
-      "description": "适用于 HarmonyOS 的开放源代码许可扫描与展示库 —— 该包是 OSSLibraries 的 Core 部分。",
+      "description": "该库尚在开发中。",
       "website": "",
       "developers": [
         {
