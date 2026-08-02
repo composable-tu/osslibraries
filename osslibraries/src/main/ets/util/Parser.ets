@@ -4,180 +4,204 @@ import { Developer } from '../entity/Developer';
 import { Organization } from '../entity/Organization';
 import { Scm } from '../entity/Scm';
 import { Funding } from '../entity/Funding';
+import { hilog } from '@kit.PerformanceAnalysisKit';
 
 /**
- * Result of parsing the OSSLibraries JSON.
+ * 解析结果
  */
 export class ParseResult {
   libraries: Library[] = [];
   licenses: License[] = [];
 }
 
+interface JsonLicense {
+  hash?: string;
+  name?: string;
+  url?: string;
+  spdxId?: string;
+  year?: string;
+  content?: string;
+  licenseContent?: string;
+}
+
+interface JsonDeveloper {
+  name?: string;
+  organisationUrl?: string;
+}
+
+interface JsonOrganization {
+  name?: string;
+  url?: string;
+}
+
+interface JsonScm {
+  connection?: string;
+  developerConnection?: string;
+  url?: string;
+}
+
+interface JsonFunding {
+  platform?: string;
+  url?: string;
+}
+
+interface JsonLibrary {
+  uniqueId?: string;
+  artifactVersion?: string;
+  name?: string;
+  description?: string;
+  website?: string;
+  developers?: JsonDeveloper[];
+  organization?: JsonOrganization;
+  scm?: JsonScm;
+  licenses?: string[]; // hash 引用
+  funding?: JsonFunding[];
+  tag?: string;
+}
+
+interface JsonRoot {
+  libraries?: JsonLibrary[];
+  licenses?: Record<string, JsonLicense>;
+}
+
+const LOG_DOMAIN: number = 0x0001;
+const LOG_TAG: string = 'OSSLibraries.Parser';
+
 /**
- * Parses OSSLibraries JSON into `Library` and `License` objects.
+ * 将 OSSLibraries JSON 解析为 Library / License 对象。
  *
- * JSON structure:
+ * JSON 结构:
  * ```
  * {
  *   "libraries": [ { ..., "licenses": ["hash1", "hash2"] } ],
  *   "licenses":  { "hash1": { "name": "...", "content": "...", "hash": "hash1" } }
  * }
  * ```
- * The `licenses` array inside each library entry holds hash references that
- * are resolved against the top-level `licenses` map.
+ * 每个库条目内的 licenses 数组持有 hash 引用,会与顶层 licenses 映射对照解析。
+ *
+ * uniqueId 为唯一必需字段;缺失则跳过该条目并记录告警,避免脏数据进入列表。
  */
 export class Parser {
   /**
-   * Parse a JSON string in OSSLibraries format.
+   * 解析 OSSLibraries 格式的 JSON 字符串。
    */
   static parse(json: string): ParseResult {
-    const parsed: Object = JSON.parse(json);
-    const root: Record<string, Object> = parsed as Record<string, Object>;
-
+    const root: JsonRoot = JSON.parse(json) as JsonRoot;
     const result: ParseResult = new ParseResult();
 
-    // --- Parse the licenses map first so library entries can resolve refs ---
+    // --- 先解析 licenses 映射,后续库条目可据此解析引用 ---
     const licensesMap: Map<string, License> = new Map();
-    const licensesObj: Object = root['licenses'];
-    if (licensesObj !== undefined && licensesObj !== null) {
-      const licensesRecord: Record<string, Object> = licensesObj as Record<string, Object>;
-      const keys: string[] = Object.keys(licensesRecord);
-      for (let i = 0; i < keys.length; i++) {
-        const key: string = keys[i];
-        const licRaw: Object = licensesRecord[key];
-        if (licRaw === undefined || licRaw === null) {
-          continue;
-        }
-        const lic: License = Parser.parseLicense(licRaw as Record<string, Object>, key);
-        licensesMap.set(key, lic);
-        result.licenses.push(lic);
+    const licensesRecord: Record<string, JsonLicense> = root.licenses ?? {};
+    const licKeys: string[] = Object.keys(licensesRecord);
+    for (let i = 0; i < licKeys.length; i++) {
+      const key: string = licKeys[i];
+      const licRaw: JsonLicense | undefined = licensesRecord[key];
+      if (licRaw === undefined || licRaw === null) {
+        continue;
       }
+      const lic: License = Parser.parseLicense(licRaw, key);
+      licensesMap.set(key, lic);
+      result.licenses.push(lic);
     }
 
-    // --- Parse the libraries array ---
-    const libsRaw: Object = root['libraries'];
-    if (libsRaw !== undefined && libsRaw !== null) {
-      const libsArr: Object[] = libsRaw as Object[];
-      for (let i = 0; i < libsArr.length; i++) {
-        const libObj: Object = libsArr[i];
-        if (libObj === undefined || libObj === null) {
-          continue;
-        }
-        const lib: Library = Parser.parseLibrary(libObj as Record<string, Object>, licensesMap);
-        result.libraries.push(lib);
+    // --- 解析 libraries 数组 ---
+    const libsArr: JsonLibrary[] = root.libraries ?? [];
+    for (let i = 0; i < libsArr.length; i++) {
+      const libObj: JsonLibrary | undefined = libsArr[i];
+      if (libObj === undefined || libObj === null) {
+        continue;
       }
+      // 必需字段校验:uniqueId 缺失则跳过并告警,避免空 ID 污染列表。
+      if (libObj.uniqueId === undefined || libObj.uniqueId === null || libObj.uniqueId.length === 0) {
+        hilog.warn(LOG_DOMAIN, LOG_TAG, `skip library at index ${i}: missing required field 'uniqueId'`);
+        continue;
+      }
+      const lib: Library = Parser.parseLibrary(libObj, licensesMap);
+      result.libraries.push(lib);
     }
 
     return result;
   }
 
-  private static parseLicense(obj: Record<string, Object>, fallbackHash: string): License {
+  private static parseLicense(obj: JsonLicense, fallbackHash: string): License {
     const lic: License = new License();
-    lic.hash = Parser.getStr(obj, 'hash', fallbackHash);
-    lic.name = Parser.getStr(obj, 'name', '');
-    lic.url = Parser.getStr(obj, 'url', '');
-    lic.spdxId = Parser.getStr(obj, 'spdxId', '');
-    lic.year = Parser.getStr(obj, 'year', '');
-    // Some JSON uses "content", others "licenseContent"
-    lic.licenseContent = Parser.getStr(obj, 'content', Parser.getStr(obj, 'licenseContent', ''));
+    lic.hash = obj.hash ?? fallbackHash;
+    lic.name = obj.name ?? '';
+    lic.url = obj.url ?? '';
+    lic.spdxId = obj.spdxId ?? '';
+    lic.year = obj.year ?? '';
+    // 部分 JSON 用 "content",部分用 "licenseContent"
+    lic.licenseContent = obj.content ?? obj.licenseContent ?? '';
     return lic;
   }
 
-  private static parseLibrary(obj: Record<string, Object>, licensesMap: Map<string, License>): Library {
+  private static parseLibrary(obj: JsonLibrary, licensesMap: Map<string, License>): Library {
     const lib: Library = new Library();
-    lib.uniqueId = Parser.getStr(obj, 'uniqueId', '');
-    lib.artifactVersion = Parser.getStr(obj, 'artifactVersion', '');
-    lib.name = Parser.getStr(obj, 'name', lib.uniqueId);
-    lib.description = Parser.getStr(obj, 'description', '');
-    lib.website = Parser.getStr(obj, 'website', '');
+    // uniqueId 已在 parse() 校验,这里安全取值。
+    lib.uniqueId = obj.uniqueId ?? '';
+    lib.artifactVersion = obj.artifactVersion ?? '';
+    lib.name = obj.name ?? lib.uniqueId;
+    lib.description = obj.description ?? '';
+    lib.website = obj.website ?? '';
 
-    // Developers
-    const devsRaw: Object = obj['developers'];
-    if (devsRaw !== undefined && devsRaw !== null) {
-      const devsArr: Object[] = devsRaw as Object[];
-      for (let i = 0; i < devsArr.length; i++) {
-        const devObj: Object = devsArr[i];
-        if (devObj === undefined || devObj === null) {
-          continue;
-        }
-        const dev: Developer = new Developer();
-        const devRecord: Record<string, Object> = devObj as Record<string, Object>;
-        dev.name = Parser.getStr(devRecord, 'name', '');
-        dev.organisationUrl = Parser.getStr(devRecord, 'organisationUrl', '');
-        lib.developers.push(dev);
+    // 开发者
+    const devs: JsonDeveloper[] = obj.developers ?? [];
+    for (let i = 0; i < devs.length; i++) {
+      const devObj: JsonDeveloper | undefined = devs[i];
+      if (devObj === undefined || devObj === null) {
+        continue;
       }
+      const dev: Developer = new Developer();
+      dev.name = devObj.name ?? '';
+      dev.organisationUrl = devObj.organisationUrl ?? '';
+      lib.developers.push(dev);
     }
 
-    // Organization
-    const orgRaw: Object = obj['organization'];
-    if (orgRaw !== undefined && orgRaw !== null) {
-      const orgRecord: Record<string, Object> = orgRaw as Record<string, Object>;
+    // 组织
+    const org: JsonOrganization | undefined = obj.organization;
+    if (org !== undefined && org !== null) {
       lib.organization = new Organization(
-        Parser.getStr(orgRecord, 'name', ''),
-        Parser.getStr(orgRecord, 'url', ''));
+        org.name ?? '',
+        org.url ?? '');
     }
 
     // SCM
-    const scmRaw: Object = obj['scm'];
-    if (scmRaw !== undefined && scmRaw !== null) {
-      const scmRecord: Record<string, Object> = scmRaw as Record<string, Object>;
+    const scm: JsonScm | undefined = obj.scm;
+    if (scm !== undefined && scm !== null) {
       lib.scm = new Scm(
-        Parser.getStr(scmRecord, 'connection', ''),
-        Parser.getStr(scmRecord, 'developerConnection', ''),
-        Parser.getStr(scmRecord, 'url', ''));
+        scm.connection ?? '',
+        scm.developerConnection ?? '',
+        scm.url ?? '');
     }
 
-    // Licenses — array of hash strings resolved against the licenses map
-    const licRefsRaw: Object = obj['licenses'];
-    if (licRefsRaw !== undefined && licRefsRaw !== null) {
-      const licRefs: Object[] = licRefsRaw as Object[];
-      for (let i = 0; i < licRefs.length; i++) {
-        const ref: Object = licRefs[i];
-        if (ref === undefined || ref === null) {
-          continue;
-        }
-        const hash: string = ref as string;
-        const resolved: License | undefined = licensesMap.get(hash);
-        if (resolved !== undefined) {
-          lib.licenses.push(resolved);
-        }
+    // 许可证 —— hash 字符串数组,与 licenses 映射对照解析
+    const licRefs: string[] = obj.licenses ?? [];
+    for (let i = 0; i < licRefs.length; i++) {
+      const ref: string | undefined = licRefs[i];
+      if (ref === undefined || ref === null) {
+        continue;
+      }
+      const resolved: License | undefined = licensesMap.get(ref);
+      if (resolved !== undefined) {
+        lib.licenses.push(resolved);
       }
     }
 
-    // Funding
-    const fundRaw: Object = obj['funding'];
-    if (fundRaw !== undefined && fundRaw !== null) {
-      const fundArr: Object[] = fundRaw as Object[];
-      for (let i = 0; i < fundArr.length; i++) {
-        const fundObj: Object = fundArr[i];
-        if (fundObj === undefined || fundObj === null) {
-          continue;
-        }
-        const fundRecord: Record<string, Object> = fundObj as Record<string, Object>;
-        lib.funding.push(new Funding(
-          Parser.getStr(fundRecord, 'platform', ''),
-          Parser.getStr(fundRecord, 'url', '')));
+    // 资助
+    const fundArr: JsonFunding[] = obj.funding ?? [];
+    for (let i = 0; i < fundArr.length; i++) {
+      const fundObj: JsonFunding | undefined = fundArr[i];
+      if (fundObj === undefined || fundObj === null) {
+        continue;
       }
+      lib.funding.push(new Funding(
+        fundObj.platform ?? '',
+        fundObj.url ?? ''));
     }
 
-    // Tag
-    lib.tag = Parser.getStr(obj, 'tag', '');
+    // 标签
+    lib.tag = obj.tag ?? '';
 
     return lib;
-  }
-
-  /**
-   * Safely extract a string property from a Record, returning a fallback
-   * when the key is missing or the value is not a string.
-   */
-  private static getStr(obj: Record<string, Object>, key: string, fallback: string): string {
-    const val: Object = obj[key];
-    if (val === undefined || val === null) {
-      return fallback;
-    }
-    if (typeof val === 'string') {
-      return val as string;
-    }
-    return fallback;
   }
 }
