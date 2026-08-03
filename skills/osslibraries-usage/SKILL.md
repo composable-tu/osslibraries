@@ -13,6 +13,17 @@ OSSLibraries is an open-source license scanning and display library for HarmonyO
 
 License data is generated at compile time by a standalone Hvigor plugin **`osslibraries-hvigor-plugin`** (npm package) that scans `oh_modules/` and produces `entry/src/main/resources/rawfile/osslibraries.json`.
 
+## Cangjie HarmonyOS Support
+
+Not supported. Per Huawei's documentation:
+
+> 在开发仓颉应用时，通过调用 ArkTS 已有库复用 ArkTS 丰富的库生态。仓颉应用中不支持增加 ArkTS 页面，但支持增加 ArkTS 模块。ArkTS 库分为 NAPI (Node.js API) 模块和三方库模块，仓颉当前支持调用 NAPI 模块，但不支持三方库模块，调用 NAPI 模块的方式可参见仓颉调用 ArkTS。
+
+Two independent blockers apply to this library:
+
+1. **No ArkTS pages**: Cangjie HarmonyOS apps cannot add ArkTS pages, and `osslibraries_ui` is built on ArkTS pages.
+2. **No third-party ArkTS libraries**: Cangjie HarmonyOS apps cannot call third-party ArkTS library modules, and `osslibraries` / `osslibraries_ui` are third-party OHPM packages (not NAPI modules).
+
 ## When to Use This Skill
 
 - The user wants to display an "Open Source Licenses" page in a HarmonyOS app
@@ -20,6 +31,7 @@ License data is generated at compile time by a standalone Hvigor plugin **`ossli
 - The user wants to configure / troubleshoot the `osslibraries-hvigor-plugin` scan plugin
 - The user wants to read or parse `osslibraries.json`
 - The user wants to filter self-owned modules out of the license list
+- **Not applicable**: Cangjie HarmonyOS apps are not supported
 
 ## Decide the Path First
 

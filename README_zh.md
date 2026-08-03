@@ -4,6 +4,9 @@
 
 [English](README.md)
 
+> [!NOTE]
+> 本库不支持仓颉（Cangjie）鸿蒙应用。根据华为文档，仓颉鸿蒙应用不支持增加 ArkTS 页面，也不支持调用三方 ArkTS 库；而本库基于 ArkTS 页面与组件实现。
+
 ## 演示截图
 
 ![](./readme-assets/demo.jpg)

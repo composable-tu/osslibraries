@@ -4,6 +4,9 @@ An open source license scanning and display library for HarmonyOS.
 
 [中文文档](README_zh.md)
 
+> [!NOTE]
+> This library does not support Cangjie HarmonyOS apps. Per Huawei's documentation, Cangjie HarmonyOS apps cannot add ArkTS pages or call third-party ArkTS libraries; this library is a third-party library built on ArkTS pages and components.
+
 ## Demo
 
 ![](./readme-assets/demo.jpg)

@@ -2,6 +2,9 @@
 
 一个适用于 HarmonyOS 的开放源代码许可扫描与展示库 —— 该包是 OSSLibraries 的 Core 部分。
 
+> [!NOTE]
+> 本包不支持仓颉（Cangjie）鸿蒙应用。根据华为文档，仓颉鸿蒙应用不支持调用三方 ArkTS 库；而本包属于三方 ArkTS 库。
+
 ## 快速接入（带预定义 UI）
 
 该包是 OSSLibraries 的 Core 部分，不包含预定义 UI 部分。
