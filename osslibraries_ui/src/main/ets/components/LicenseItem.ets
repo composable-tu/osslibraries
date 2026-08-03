@@ -1,4 +1,4 @@
-import { Library, License, Developer } from 'osslibraries';
+import { Developer, Library, License } from 'osslibraries';
 import { LengthMetrics } from '@kit.ArkUI';
 
 @Component
@@ -6,8 +6,7 @@ export struct LicenseItem {
   @Prop lib: Library = new Library();
 
   build() {
-    Column() {
-      // 库名称
+    Column() { // 库名称
       Text(this.lib.name.length > 0 ? this.lib.name : this.lib.uniqueId)
         .fontSize(16)
         .fontWeight(FontWeight.Medium)
@@ -49,41 +48,47 @@ export struct LicenseItem {
 
       // 版本徽章 + 许可证徽章
       if (this.lib.artifactVersion.length > 0 || this.lib.licenses.length > 0) {
-        Flex({ wrap: FlexWrap.Wrap, space: { main: LengthMetrics.vp(8), cross: LengthMetrics.vp(7) } }) {
-          // 版本徽章
+        Flex({ wrap: FlexWrap.Wrap, space: { main: LengthMetrics.vp(8), cross: LengthMetrics.vp(7) } }) { // 版本徽章
           if (this.lib.artifactVersion.length > 0) {
             Text(this.formatVersion())
               .fontSize(11)
               .fontColor($r('sys.color.font_primary'))
               .backgroundColor($r('sys.color.comp_background_tertiary'))
               .borderRadius(4)
-              .padding({ left: 8, right: 8, top: 3, bottom: 3 })
+              .padding({
+                left: 8,
+                right: 8,
+                top: 3,
+                bottom: 3
+              })
               .textAlign(TextAlign.Center)
           }
 
           // 许可证徽章
           ForEach(this.lib.licenses, (lic: License) => {
-            Text(
-              lic.name.length > 0
-                ? lic.name
-                : (lic.spdxId && lic.spdxId.length > 0 ? lic.spdxId : lic.hash)
-            )
-              .fontSize(11)
-              .fontColor($r('sys.color.brand'))
-              .backgroundColor($r('sys.color.ohos_id_select_selected_color'))
-              .borderRadius(4)
-              .padding({ left: 8, right: 8, top: 3, bottom: 3 })
-              .textAlign(TextAlign.Center)
+            if (lic.name.length > 0 || (lic.spdxId && lic.spdxId.length > 0)) {
+              Text(lic.name.length > 0 ? lic.name : lic.spdxId)
+                .fontSize(11)
+                .fontColor($r('sys.color.brand'))
+                .backgroundColor($r('sys.color.ohos_id_select_selected_color'))
+                .borderRadius(4)
+                .padding({
+                  left: 8,
+                  right: 8,
+                  top: 3,
+                  bottom: 3
+                })
+                .textAlign(TextAlign.Center)
+            }
           }, (lic: License) => lic.hash)
-        }
-        .margin({ top: 8 })
-        .width('100%')
+        }.margin({ top: 8 }).width('100%')
       }
-    }
-    .width('100%')
-    .padding({ left: 16, right: 16, top: 14, bottom: 14 })
-    .backgroundColor($r('sys.color.comp_background_list_card'))
-    .borderRadius(16)
+    }.width('100%').padding({
+      left: 16,
+      right: 16,
+      top: 14,
+      bottom: 14
+    }).backgroundColor($r('sys.color.comp_background_list_card')).borderRadius(16)
   }
 
   /**

@@ -8,6 +8,10 @@
     "url": "https://github.com/composable-tu"
   },
   "license": "MulanPSL-2.0",
+  "homepage": "https://github.com/composable-tu/osslibraries",
   "repository": "https://github.com/composable-tu/osslibraries",
+  "keywords": [
+    "osslibraries", "license", "licenses", "open-source", "oss",
+  ],
   "dependencies": {}
 }

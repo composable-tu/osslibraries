@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.3
+
+- 适配 `osslibraries-hvigor-plugin` 上游更改，现在许可证名称和 SPDX ID 均为空时不再向 UI 展示 `hash`。
+
 ## v0.0.2
 
 - 更新 `osslibraries` 上游依赖版本至 0.0.2。
