@@ -10,6 +10,6 @@
   "license": "MulanPSL-2.0",
   "repository": "https://github.com/composable-tu/osslibraries",
   "dependencies": {
-    "osslibraries": "^0.0.1"
+    "osslibraries": "^0.0.2"
   }
 }

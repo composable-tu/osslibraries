@@ -111,7 +111,7 @@ export class Parser {
       if (libObj === undefined || libObj === null) {
         continue;
       }
-      // 必需字段校验:uniqueId 缺失则跳过并告警,避免空 ID 污染列表。
+      // 必需字段校验：uniqueId 缺失则跳过并告警，避免空 ID 污染列表。
       if (libObj.uniqueId === undefined || libObj.uniqueId === null || libObj.uniqueId.length === 0) {
         hilog.warn(LOG_DOMAIN, LOG_TAG, `skip library at index ${i}: missing required field 'uniqueId'`);
         continue;
@@ -130,7 +130,7 @@ export class Parser {
     lic.url = obj.url ?? '';
     lic.spdxId = obj.spdxId ?? '';
     lic.year = obj.year ?? '';
-    // 部分 JSON 用 "content",部分用 "licenseContent"
+    // 部分 JSON 用 "content"，部分用 "licenseContent"
     lic.licenseContent = obj.content ?? obj.licenseContent ?? '';
     return lic;
   }

@@ -208,8 +208,8 @@ importers:
   .:
     devDependencies:
       osslibraries-hvigor-plugin:
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.0.3
+        version: 0.0.3
 
 packages:
 
@@ -218,8 +218,8 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
-  osslibraries-hvigor-plugin@0.0.2:
-    resolution: {integrity: sha512-/jc3QEaxa/xt+cOUKqVHyOQMel7d62xg1o9nlRPJkDQWQ4daPWpBrzexNldiWV47zH88rbt4rg3EV2+Euy1d6g==}
+  osslibraries-hvigor-plugin@0.0.3:
+    resolution: {integrity: sha512-djhcpKZQ38aP7uQI17QdaUPOYeJ5giLS8nSUx0MEr4T/rmsL1YYNtG/pStepClfiepXcnR2GsKH2duc06nDYNg==}
 
   spdx-correct@3.2.0:
     resolution: {integrity: sha512-kN9dJbvnySHULIluDHy32WHRUu3Og7B9sbY7tsFLctQkIqnMh3hErYgdMjTYuqmcXX+lK5T1lnUt3G7zNswmZA==}
@@ -241,7 +241,7 @@ snapshots:
 
   json5@2.2.3: {}
 
-  osslibraries-hvigor-plugin@0.0.2:
+  osslibraries-hvigor-plugin@0.0.3:
     dependencies:
       json5: 2.2.3
       spdx-correct: 3.2.0

@@ -2,12 +2,13 @@
 
 一个适用于 HarmonyOS 的开放源代码许可扫描与展示库 —— 该包是 OSSLibraries 的 Core 部分。
 
-<!-- OHPM 的审核您好，OSSLibraries 的 OHPM 库包含 `osslibraries` 部分和 `osslibraries_ui` 部分，前者定义了 OSSLibraries 的数据解析部分，后者基于前者实现了 OSSLibraries 的预设展示页。README 是面向使用 OSSLibraries 整个库的应用开发者的介绍文档，包含 `osslibraries` 部分和 `osslibraries_ui` 部分的介绍说明。因此 README 并没有与 Har 文件货不对板。如您有任何疑问，欢迎前往 GitHub 查看具体的代码实现：
-
-- https://github.com/composable-tu/osslibraries
-- https://github.com/composable-tu/osslibraries-hvigor-plugin -->
-
 ## 快速接入（带预定义 UI）
+
+该包是 OSSLibraries 的 Core 部分，不包含预定义 UI 部分。
+
+如需使用 OSSLibraries 预定义 UI，请参见：https://ohpm.openharmony.cn/#/cn/detail/osslibraries_ui
+
+## 自定义 UI
 
 > [!TIP]
 > 可以安装该库提供的 Agent Skills，让 AI Agent 帮助快速在 HarmonyOS 项目中集成该库：
@@ -19,7 +20,7 @@
 ### 添加 OHPM 模块依赖
 
 ```zsh
-ohpm install osslibraries_ui
+ohpm install osslibraries
 ```
 
 ### 注册 Hvigor 插件
@@ -63,34 +64,7 @@ export default {
 
 每次构建时，插件会扫描 `oh_modules/` 并生成 `entry/src/main/resources/rawfile/osslibraries.json`。
 
-### 导入 HAR 页面（注册命名路由）
-
-在 `entry` 模块的页面文件顶部（如 `Index.ets`）添加:
-
-```ets
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseListPage';
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseDetailPage';
-```
-
-`entry` 模块的 `main_pages.json` 无需改动，只需保留自身页面即可。
-
-### 跳转到许可列表页
-
-在应用的任意页面中，通过 `pushNamedRoute` 跳转到列表页:
-
-```ets
-this.getUIContext().getRouter().pushNamedRoute({
-  name: 'OSSLibrariesLicenseListPage'
-});
-```
-
-## 自定义 UI
-
-可以不使用预定义的 OSSLibraries UI 页面，直接使用 `core` 模块:
-
-```zsh
-ohpm install osslibraries
-```
+### 使用
 
 然后，在自定义页面中按以下方法读取 `osslibraries.json`：
 

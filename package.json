@@ -8,6 +8,6 @@
     }
   },
   "devDependencies": {
-    "osslibraries-hvigor-plugin": "^0.0.2"
+    "osslibraries-hvigor-plugin": "^0.0.3"
   }
 }

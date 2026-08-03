@@ -122,7 +122,7 @@ export struct OSSLibrariesLicenseDetailPage {
   @Builder
   LicenseContent(lic: License) {
     Column() {
-      // 许可证全文(可选中复制),无全文时不渲染正文
+      // 许可证全文
       if (lic.licenseContent.length > 0) {
         Text(lic.licenseContent)
           .fontSize(14)
