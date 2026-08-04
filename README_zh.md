@@ -2,6 +2,8 @@
 
 一个适用于 HarmonyOS 的开放源代码许可扫描与展示库。
 
+![](./readme-assets/banner.png)
+
 [English](README.md)
 
 > [!NOTE]

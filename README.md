@@ -2,6 +2,8 @@
 
 An open source license scanning and display library for HarmonyOS.
 
+![](./readme-assets/banner.png)
+
 [中文文档](README_zh.md)
 
 > [!NOTE]
