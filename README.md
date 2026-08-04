@@ -30,7 +30,7 @@ ohpm install osslibraries_ui
 
 ### Register the Hvigor plugin
 
-The license scanner is a standalone Hvigor plugin `osslibraries-hvigor-plugin` that runs before ArkTS compilation and writes `osslibraries.json` into the `rawfile` directory of the `entry` module (the target module can be customized; `entry` is used here as an example).
+The license scanner is a standalone Hvigor plugin [`osslibraries-hvigor-plugin`](https://github.com/composable-tu/osslibraries-hvigor-plugin) that runs before ArkTS compilation and writes `osslibraries.json` into the `rawfile` directory of the `entry` module (the target module can be customized; `entry` is used here as an example).
 
 Install via npm:
 

@@ -30,7 +30,7 @@ ohpm install osslibraries_ui
 
 ### 注册 Hvigor 插件
 
-依赖库许可信息扫描器是一个独立的 Hvigor 插件 `osslibraries-hvigor-plugin`，需要在编译 ArkTS 前运行，它会将 `osslibraries.json` 写入 `entry` 模块（也可以自定义载入哪个模块，这里仅以 `entry` 举例）的 `rawfile` 目录。
+依赖库许可信息扫描器是一个独立的 Hvigor 插件 [`osslibraries-hvigor-plugin`](https://github.com/composable-tu/osslibraries-hvigor-plugin)，需要在编译 ArkTS 前运行，它会将 `osslibraries.json` 写入 `entry` 模块（也可以自定义载入哪个模块，这里仅以 `entry` 举例）的 `rawfile` 目录。
 
 使用 npm 安装：
 
