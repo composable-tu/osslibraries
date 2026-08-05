@@ -28,7 +28,7 @@ export struct OSSLibrariesLicenseDetailPage {
   @State notFound: boolean = false;
   @State scmUrl: string = '';
   @State customMaterialLevel: hdsMaterial.MaterialLevel = hdsMaterial.MaterialLevel.EXQUISITE;
-  @State isLinkCardPressed: boolean = false;
+  @State pressedLinkUrls: Set<string> = new Set();
 
   aboutToAppear(): void {
     this.customMaterialLevel = getMaterialLevel();
@@ -133,7 +133,7 @@ export struct OSSLibrariesLicenseDetailPage {
       .width('100%')
       .padding(8)
       .borderRadius(15)
-      .backgroundColor(this.isLinkCardPressed ? $r('sys.color.ohos_id_color_click_effect') : Color.Transparent)
+      .backgroundColor(this.pressedLinkUrls.has(url) ? $r('sys.color.ohos_id_color_click_effect') : Color.Transparent)
     }
     .width('100%')
     .padding(6)
@@ -142,9 +142,13 @@ export struct OSSLibrariesLicenseDetailPage {
     .margin({ bottom: 12 })
     .onTouch((event: TouchEvent) => {
       if (event.type === TouchType.Down) {
-        this.isLinkCardPressed = true;
+        const next = new Set(this.pressedLinkUrls);
+        next.add(url);
+        this.pressedLinkUrls = next;
       } else if (event.type === TouchType.Up || event.type === TouchType.Cancel) {
-        this.isLinkCardPressed = false;
+        const next = new Set(this.pressedLinkUrls);
+        next.delete(url);
+        this.pressedLinkUrls = next;
       }
     })
   }
