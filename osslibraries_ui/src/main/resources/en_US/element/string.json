@@ -15,10 +15,6 @@
     {
       "name": "osslibraries_library_not_found",
       "value": "Library not found."
-    },
-    {
-      "name": "osslibraries_license_detail",
-      "value": "License Detail"
     }
   ]
 }

@@ -4,14 +4,15 @@ import { LengthMetrics } from '@kit.ArkUI';
 @Component
 export struct LicenseItem {
   @Prop lib: Library = new Library();
+  @State isPressed: boolean = false;
 
   build() {
-    Column() { // 库名称
-      Text(this.lib.name.length > 0 ? this.lib.name : this.lib.uniqueId)
+    Column() {
+      Column() { // 库名称
+        Text(this.lib.name.length > 0 ? this.lib.name : this.lib.uniqueId)
         .fontSize(16)
         .fontWeight(FontWeight.Medium)
         .fontColor($r('sys.color.font_primary'))
-        .maxLines(1)
         .textOverflow({ overflow: TextOverflow.Ellipsis })
         .width('100%')
 
@@ -20,7 +21,6 @@ export struct LicenseItem {
         Text(this.lib.uniqueId)
           .fontSize(12)
           .fontColor($r('sys.color.font_secondary'))
-          .maxLines(1)
           .textOverflow({ overflow: TextOverflow.Ellipsis })
           .margin({ top: 2 })
           .width('100%')
@@ -40,7 +40,6 @@ export struct LicenseItem {
         Text(this.lib.description)
           .fontSize(12)
           .fontColor($r('sys.color.font_secondary'))
-          .maxLines(3)
           .textOverflow({ overflow: TextOverflow.Ellipsis })
           .margin({ top: 4 })
           .width('100%')
@@ -83,12 +82,18 @@ export struct LicenseItem {
           }, (lic: License) => lic.hash)
         }.margin({ top: 8 }).width('100%')
       }
-    }.width('100%').padding({
-      left: 16,
-      right: 16,
-      top: 14,
-      bottom: 14
-    }).backgroundColor($r('sys.color.comp_background_list_card')).borderRadius(16)
+      }.width('100%').padding(8).borderRadius(15)
+      .backgroundColor(this.isPressed ? $r('sys.color.ohos_id_color_click_effect') : Color.Transparent)
+    }.width('100%').padding(6)
+    .backgroundColor($r('sys.color.comp_background_list_card'))
+    .borderRadius(21)
+    .onTouch((event: TouchEvent) => {
+      if (event.type === TouchType.Down) {
+        this.isPressed = true;
+      } else if (event.type === TouchType.Up || event.type === TouchType.Cancel) {
+        this.isPressed = false;
+      }
+    })
   }
 
   /**

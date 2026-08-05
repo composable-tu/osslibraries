@@ -16,6 +16,7 @@ export struct OSSLibrariesLicenseDetailPage {
   @State notFound: boolean = false;
   @State scmUrl: string = '';
   @State customMaterialLevel: hdsMaterial.MaterialLevel = hdsMaterial.MaterialLevel.EXQUISITE;
+  @State isLinkCardPressed: boolean = false;
 
   aboutToAppear(): void {
     this.customMaterialLevel = getMaterialLevel();
@@ -56,7 +57,7 @@ export struct OSSLibrariesLicenseDetailPage {
             }
             .onClick(() => {
               this.openUrl(this.lib.website);
-            }, 1)
+            }, 5)
           }
           if (this.scmUrl.length > 0 && this.scmUrl !== this.lib.website) {
             ListItem() {
@@ -64,7 +65,7 @@ export struct OSSLibrariesLicenseDetailPage {
             }
             .onClick(() => {
               this.openUrl(this.scmUrl);
-            }, 1)
+            }, 5)
           }
 
           // 许可证全文（仅渲染有正文内容的许可证）
@@ -93,30 +94,47 @@ export struct OSSLibrariesLicenseDetailPage {
     }
     .backgroundColor($r('sys.color.background_secondary'))
     .titleMode(HdsNavigationTitleMode.MINI)
-    .titleBar(buildTitleBarOpts(this.lib.name.length > 0 ? this.lib.name : $r('app.string.osslibraries_license_detail'),
-      this.customMaterialLevel))
+    .titleBar(buildTitleBarOpts(
+      $r('app.string.osslibraries_title_licenses'),
+      this.customMaterialLevel,
+      undefined,
+      this.lib.name.length > 0 ? this.lib.name : undefined
+    ))
     .hideBackButton(false)
   }
 
   @Builder
   LinkCard(url: string, icon: Resource) {
     Row() {
-      SymbolGlyph(icon)
-        .fontSize(18)
-        .fontColor([$r('sys.color.font_primary')])
-        .margin({ right: 8 })
+      Row() {
+        SymbolGlyph(icon)
+          .fontSize(18)
+          .fontColor([$r('sys.color.font_primary')])
+          .margin({ right: 8 })
 
-      Text(url)
-        .fontSize(14)
-        .fontColor($r('sys.color.font_primary'))
-        .layoutWeight(1)
-        .textOverflow({ overflow: TextOverflow.Ellipsis })
+        Text(url)
+          .fontSize(14)
+          .fontColor($r('sys.color.font_primary'))
+          .layoutWeight(1)
+          .textOverflow({ overflow: TextOverflow.Ellipsis })
+      }
+      .width('100%')
+      .padding(8)
+      .borderRadius(15)
+      .backgroundColor(this.isLinkCardPressed ? $r('sys.color.ohos_id_color_click_effect') : Color.Transparent)
     }
     .width('100%')
-    .padding({ left: 16, right: 16, top: 14, bottom: 14 })
+    .padding(6)
     .backgroundColor($r('sys.color.comp_background_list_card'))
-    .borderRadius(16)
+    .borderRadius(21)
     .margin({ bottom: 12 })
+    .onTouch((event: TouchEvent) => {
+      if (event.type === TouchType.Down) {
+        this.isLinkCardPressed = true;
+      } else if (event.type === TouchType.Up || event.type === TouchType.Cancel) {
+        this.isLinkCardPressed = false;
+      }
+    })
   }
 
   @Builder
@@ -135,7 +153,7 @@ export struct OSSLibrariesLicenseDetailPage {
     .width('100%')
     .padding(16)
     .backgroundColor($r('sys.color.comp_background_list_card'))
-    .borderRadius(16)
+    .borderRadius(21)
   }
 
   /**

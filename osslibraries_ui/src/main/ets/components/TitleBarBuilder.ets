@@ -18,14 +18,18 @@ export function buildTitleBarOpts(
   title: string | Resource,
   materialLevel: hdsMaterial.MaterialLevel,
   contentOverrides?: Partial<TitleBarContentOptions>,
+  subTitle?: string | Resource
 ): HdsNavigationTitleBarOptions {
   const navTitle: HdsNavigationTitle = { mainTitle: title };
+  if (subTitle) {
+    navTitle.subTitle = subTitle;
+  }
   const content: TitleBarContentOptions = { title: navTitle };
-  if (contentOverrides !== undefined) {
-    if (contentOverrides.backIcon !== undefined) {
+  if (contentOverrides) {
+    if (contentOverrides.backIcon) {
       content.backIcon = contentOverrides.backIcon;
     }
-    if (contentOverrides.menu !== undefined) {
+    if (contentOverrides.menu) {
       content.menu = contentOverrides.menu;
     }
   }

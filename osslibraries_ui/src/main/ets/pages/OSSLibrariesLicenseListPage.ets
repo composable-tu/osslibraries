@@ -80,7 +80,7 @@ export struct OSSLibrariesLicenseListPage {
               if (lib.licenses.length > 0 || lib.website.length > 0) {
                 this.navigateToDetail(lib.uniqueId);
               }
-            }, 1)
+            }, 5)
           }, (lib: Library) => lib.uniqueId)
         }
         .width('100%')

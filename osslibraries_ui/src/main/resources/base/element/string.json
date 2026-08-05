@@ -15,10 +15,6 @@
     {
       "name": "osslibraries_library_not_found",
       "value": "未找到该库。"
-    },
-    {
-      "name": "osslibraries_license_detail",
-      "value": "许可详情"
     }
   ]
 }
