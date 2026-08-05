@@ -18,7 +18,7 @@
     },
     {
       "name": "entry_tagline",
-      "value": "适用于 HarmonyOS 的开放源代码许可扫描与展示库"
+      "value": "适用于 HarmonyOS ArkTS 项目的开放源代码许可扫描与展示库"
     },
     {
       "name": "entry_feature_scan_title",
@@ -35,6 +35,14 @@
     {
       "name": "entry_feature_ui_desc",
       "value": "使用 ArkUI 及 UI Design Kit 构建开箱即用的 License 列表与详情页。"
+    },
+    {
+      "name": "entry_feature_skill_title",
+      "value": "AI 辅助快速集成"
+    },
+    {
+      "name": "entry_feature_skill_desc",
+      "value": "提供 Agent Skill，帮助 AI Agent 快速集成 OSSLibraries 到您的 HarmonyOS ArkTS 项目。\n$ npx skills add composable-tu/osslibraries"
     },
     {
       "name": "entry_button_view",

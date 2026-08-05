@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.4
+
+- 优化了 OSSLibraries UI 视觉效果，包括卡片样式、点击态样式、详情页标题样式。
+- 优化了点击守卫条件：手指偏移阈值从 `1vp` 放宽为 `5vp`。
+
 ## v0.0.3
 
 - 适配 `osslibraries-hvigor-plugin` 上游更改，现在许可证名称和 SPDX ID 均为空时不再向 UI 展示 `hash`。

@@ -35,6 +35,11 @@ struct Index {
           $r('app.string.entry_feature_ui_desc'),
         )
 
+        this.FeatureCard(
+          $r('app.string.entry_feature_skill_title'),
+          $r('app.string.entry_feature_skill_desc'),
+        )
+
         Button($r('app.string.entry_button_view'))
           .fontSize(16)
           .fontWeight(FontWeight.Medium)

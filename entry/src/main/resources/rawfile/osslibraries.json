@@ -70,7 +70,7 @@
     },
     {
       "uniqueId": "osslibraries_ui",
-      "artifactVersion": "0.0.3",
+      "artifactVersion": "0.0.4",
       "name": "osslibraries_ui",
       "description": "适用于 HarmonyOS 的开放源代码许可扫描与展示库 —— 该包是 OSSLibraries 的预定义 UI 部分。",
       "website": "https://github.com/composable-tu/osslibraries",
