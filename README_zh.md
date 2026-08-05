@@ -17,7 +17,7 @@
 
 > [!TIP]
 > 可以安装该库提供的 Agent Skills，让 AI Agent 帮助快速在 HarmonyOS 项目中集成该库：
-> 
+>
 > ```zsh
 > npx skills add composable-tu/osslibraries
 > ```
@@ -64,7 +64,7 @@ export default {
 > 如果你的项目有不想出现在 License 列表中的模块，可以将依赖名传入 `selfModules`:
 >
 > ```ts
-> plugins: [ossScanPlugin({ selfModules: ['mylibrary', '3rdlibrary'] })]
+> plugins: [ossScanPlugin({ selfModules: ["mylibrary", "3rdlibrary"] })];
 > ```
 
 每次构建时，插件会扫描 `oh_modules/` 并生成 `entry/src/main/resources/rawfile/osslibraries.json`。

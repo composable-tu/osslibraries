@@ -1,9 +1,7 @@
 {
-  "module": {
-    "name": "osslibraries_ui",
-    "type": "har",
-    "deviceTypes": [
-      "default"
-    ]
-  }
+  module: {
+    name: "osslibraries_ui",
+    type: "har",
+    deviceTypes: ["default"],
+  },
 }

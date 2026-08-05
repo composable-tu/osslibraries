@@ -38,7 +38,7 @@ Two independent blockers apply to this library:
 Confirm the user's intended path before integrating:
 
 | User goal                           | Package to install | Plugin needed?           | Import pages?               |
-|-------------------------------------|--------------------|--------------------------|-----------------------------|
+| ----------------------------------- | ------------------ | ------------------------ | --------------------------- |
 | Predefined pages, minimal code      | `osslibraries_ui`  | Yes                      | Yes (register named routes) |
 | Fully custom UI                     | `osslibraries`     | Yes                      | No                          |
 | Only read an already-generated JSON | `osslibraries`     | No (JSON already exists) | No                          |
@@ -63,13 +63,13 @@ npm install osslibraries-hvigor-plugin --save-dev
 Edit the `hvigorfile.ts` of the **target module** (typically `entry/hvigorfile.ts`):
 
 ```ts
-import { hapTasks } from '@ohos/hvigor-ohos-plugin';
-import { ossScanPlugin } from 'osslibraries-hvigor-plugin';
+import { hapTasks } from "@ohos/hvigor-ohos-plugin";
+import { ossScanPlugin } from "osslibraries-hvigor-plugin";
 
 export default {
   system: hapTasks,
-  plugins: [ossScanPlugin()]
-}
+  plugins: [ossScanPlugin()],
+};
 ```
 
 On each build, the plugin scans `oh_modules/` and generates `entry/src/main/resources/rawfile/osslibraries.json`.
@@ -77,7 +77,7 @@ On each build, the plugin scans `oh_modules/` and generates `entry/src/main/reso
 **Filter self-owned modules**: pass dependency names for modules that should not appear in the list:
 
 ```ts
-plugins: [ossScanPlugin({ selfModules: ['mylibrary', '3rdlibrary'] })]
+plugins: [ossScanPlugin({ selfModules: ["mylibrary", "3rdlibrary"] })];
 ```
 
 ### 3. Import the HAR pages (register named routes)
@@ -151,7 +151,7 @@ import { LicenseItem, buildTitleBarOpts, getMaterialLevel } from 'osslibraries_u
 ### core (`osslibraries`) exports
 
 | Name                                             | Type          | Description                                                              |
-|--------------------------------------------------|---------------|--------------------------------------------------------------------------|
+| ------------------------------------------------ | ------------- | ------------------------------------------------------------------------ |
 | `Libs`                                           | class         | Main entry point. Holds `libraries: Library[]` and `licenses: License[]` |
 | `Libs.fromJson(json)`                            | static method | Builds from a JSON string; libraries sorted by name                      |
 | `libs.findLibrary(uniqueId)`                     | method        | Finds a library by uniqueId; returns `undefined` if not found            |
@@ -166,7 +166,7 @@ import { LicenseItem, buildTitleBarOpts, getMaterialLevel } from 'osslibraries_u
 ### `Library` fields
 
 | Field             | Type                      | Description                                                       |
-|-------------------|---------------------------|-------------------------------------------------------------------|
+| ----------------- | ------------------------- | ----------------------------------------------------------------- |
 | `uniqueId`        | string                    | Unique identifier (typically packageName without version)         |
 | `artifactVersion` | string                    | Version                                                           |
 | `name`            | string                    | Display name                                                      |
@@ -188,7 +188,7 @@ import { LicenseItem, buildTitleBarOpts, getMaterialLevel } from 'osslibraries_u
 ### ui (`osslibraries_ui`) exports
 
 | Name                            | Description                                                  |
-|---------------------------------|--------------------------------------------------------------|
+| ------------------------------- | ------------------------------------------------------------ |
 | `OSSLibrariesLicenseListPage`   | List page (named route name is the same)                     |
 | `OSSLibrariesLicenseDetailPage` | Detail page (named route name is the same)                   |
 | `LicenseItem`                   | Single library card component                                |
@@ -216,7 +216,13 @@ import { LicenseItem, buildTitleBarOpts, getMaterialLevel } from 'osslibraries_u
     }
   ],
   "licenses": {
-    "hash1": { "hash": "hash1", "name": "Apache-2.0", "spdxId": "Apache-2.0", "url": "...", "content": "..." }
+    "hash1": {
+      "hash": "hash1",
+      "name": "Apache-2.0",
+      "spdxId": "Apache-2.0",
+      "url": "...",
+      "content": "..."
+    }
   }
 }
 ```

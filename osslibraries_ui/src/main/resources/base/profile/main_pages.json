@@ -1,6 +1,3 @@
 {
-  "src": [
-    "pages/OSSLibrariesLicenseListPage",
-    "pages/OSSLibrariesLicenseDetailPage"
-  ]
+  "src": ["pages/OSSLibrariesLicenseListPage", "pages/OSSLibrariesLicenseDetailPage"]
 }

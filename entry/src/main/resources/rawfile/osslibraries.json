@@ -16,9 +16,7 @@
       "organization": null,
       "funding": [],
       "tag": "",
-      "licenses": [
-        "9264a6b3c134511ccfcae48ed3808320688ae6933ec4fc547476a005095fc1ef"
-      ]
+      "licenses": ["9264a6b3c134511ccfcae48ed3808320688ae6933ec4fc547476a005095fc1ef"]
     },
     {
       "uniqueId": "@ohos/hypium",
@@ -40,9 +38,7 @@
       "organization": null,
       "funding": [],
       "tag": "",
-      "licenses": [
-        "0cec06e0e55fbc3dc5cee4fca9b607f66cb8f4e4dbcf3b3c013594dd156732e9"
-      ]
+      "licenses": ["0cec06e0e55fbc3dc5cee4fca9b607f66cb8f4e4dbcf3b3c013594dd156732e9"]
     },
     {
       "uniqueId": "osslibraries",
@@ -64,9 +60,7 @@
       "organization": null,
       "funding": [],
       "tag": "",
-      "licenses": [
-        "533c62b51f490ec5ba0118d19bb2caef961c3b630bf4355eb1e360026db6fda2"
-      ]
+      "licenses": ["533c62b51f490ec5ba0118d19bb2caef961c3b630bf4355eb1e360026db6fda2"]
     },
     {
       "uniqueId": "osslibraries_ui",
@@ -88,9 +82,7 @@
       "organization": null,
       "funding": [],
       "tag": "",
-      "licenses": [
-        "533c62b51f490ec5ba0118d19bb2caef961c3b630bf4355eb1e360026db6fda2"
-      ]
+      "licenses": ["533c62b51f490ec5ba0118d19bb2caef961c3b630bf4355eb1e360026db6fda2"]
     }
   ],
   "licenses": {

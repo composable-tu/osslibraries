@@ -1,17 +1,15 @@
 {
-  "name": "osslibraries",
-  "version": "0.0.2",
-  "description": "适用于 HarmonyOS 的开放源代码许可扫描与展示库 —— 该包是 OSSLibraries 的 Core 部分。",
-  "main": "Index.ets",
-  "author": {
-    "name": "composable-tu",
-    "url": "https://github.com/composable-tu"
+  name: "osslibraries",
+  version: "0.0.2",
+  description: "适用于 HarmonyOS 的开放源代码许可扫描与展示库 —— 该包是 OSSLibraries 的 Core 部分。",
+  main: "Index.ets",
+  author: {
+    name: "composable-tu",
+    url: "https://github.com/composable-tu",
   },
-  "license": "MulanPSL-2.0",
-  "homepage": "https://github.com/composable-tu/osslibraries",
-  "repository": "https://github.com/composable-tu/osslibraries",
-  "keywords": [
-    "osslibraries", "license", "licenses", "open-source", "oss",
-  ],
-  "dependencies": {}
+  license: "MulanPSL-2.0",
+  homepage: "https://github.com/composable-tu/osslibraries",
+  repository: "https://github.com/composable-tu/osslibraries",
+  keywords: ["osslibraries", "license", "licenses", "open-source", "oss"],
+  dependencies: {},
 }
