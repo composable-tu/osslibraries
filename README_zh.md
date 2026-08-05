@@ -9,6 +9,14 @@
 > [!NOTE]
 > 本库不支持仓颉（Cangjie）鸿蒙应用。根据华为文档，仓颉鸿蒙应用不支持增加 ArkTS 页面，也不支持调用三方 ArkTS 库；而本库基于 ArkTS 页面与组件实现。
 
+## 特性
+
+- **端到端** — 从构建时扫描依赖到应用内展示 License 列表，一条链路走通，无需手动维护 JSON。
+- **预定义 UI 页面** — 提供开箱即用的列表页与详情页，基于 ArkUI 和 UI Design Kit 组件。
+- **自定义 UI 亦可** — 可单独使用 Core 包读取 `osslibraries.json`，License 列表的渲染方式完全由你决定。
+- **始终同步** — Hvigor 插件在每次构建时扫描 `oh_modules/`，License 列表永远跟随实际发布的依赖。
+- **AI 辅助集成** — 提供 Agent Skill，可由 AI 代为完成项目接入。
+
 ## 演示截图
 
 ![](./readme-assets/demo.jpg)

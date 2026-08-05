@@ -9,6 +9,14 @@ An open source license scanning and display library for HarmonyOS.
 > [!NOTE]
 > This library does not support Cangjie HarmonyOS apps. Per Huawei's documentation, Cangjie HarmonyOS apps cannot add ArkTS pages or call third-party ArkTS libraries; this library is a third-party library built on ArkTS pages and components.
 
+## Features
+
+- **End-to-end** — scans your dependencies at build time and displays the license list in your app. No manual JSON editing, no drift.
+- **Prebuilt UI pages** — drop-in list and detail pages built on ArkUI & UI Design Kit components.
+- **Custom UI, no problem** — use the core package alone to read `osslibraries.json` and render the license list in any UI you build.
+- **Always up to date** — the Hvigor plugin scans `oh_modules/` on every build. The license list always matches what you ship.
+- **AI-assisted integration** — ships an Agent Skill so an AI can wire the library into your project for you.
+
 ## Demo
 
 ![](./readme-assets/demo.jpg)
