@@ -1,25 +1,9 @@
-# OSSLibraries
+# OSSLibraries UI (Wearable)
 
-一个适用于 HarmonyOS 的开放源代码许可扫描与展示库。
-
-![](./readme-assets/banner.png)
-
-[English](README.md)
+一个适用于 HarmonyOS 的开放源代码许可扫描与展示库 —— 该包是 OSSLibraries 的预定义 UI（Wearable）部分。
 
 > [!NOTE]
-> 本库不支持仓颉（Cangjie）鸿蒙应用。根据华为文档，仓颉鸿蒙应用不支持增加 ArkTS 页面，也不支持调用三方 ArkTS 库；而本库基于 ArkTS 页面与组件实现。
-
-## 特性
-
-- **端到端** — 从构建时扫描依赖到应用内展示 License 列表，一条链路走通，无需手动维护 JSON。
-- **预定义 UI 页面** — 提供开箱即用的列表页与详情页，基于 ArkUI 和 UI Design Kit 组件。
-- **自定义 UI 亦可** — 可单独使用 Core 包读取 `osslibraries.json`，License 列表的渲染方式完全由你决定。
-- **始终同步** — Hvigor 插件在每次构建时扫描 `oh_modules/`，License 列表永远跟随实际发布的依赖。
-- **AI 辅助集成** — 提供 Agent Skill，可由 AI 代为完成项目接入。
-
-## 演示截图
-
-![](./readme-assets/demo.jpg)
+> 本包不支持仓颉（Cangjie）鸿蒙应用。根据华为文档，仓颉鸿蒙应用不支持增加 ArkTS 页面，也不支持调用三方 ArkTS 库；而本包基于 ArkTS 页面与组件实现。
 
 ## 快速接入（带预定义 UI）
 
@@ -33,7 +17,7 @@
 ### 添加 OHPM 模块依赖
 
 ```zsh
-ohpm install osslibraries_ui
+ohpm install osslibraries_ui_wear
 ```
 
 ### 注册 Hvigor 插件
@@ -59,13 +43,13 @@ bun add osslibraries-hvigor-plugin -D
 然后编辑 `entry/hvigorfile.ts` 以注册插件:
 
 ```TS
-import { hapTasks } from '@ohos/hvigor-ohos-plugin';
-import { ossScanPlugin } from 'osslibraries-hvigor-plugin';
+import { hapTasks } from "@ohos/hvigor-ohos-plugin";
+import { ossScanPlugin } from "osslibraries-hvigor-plugin";
 
 export default {
   system: hapTasks,
-  plugins: [ossScanPlugin()]
-}
+  plugins: [ossScanPlugin()],
+};
 ```
 
 > [!TIP]
@@ -82,8 +66,8 @@ export default {
 在 `entry` 模块的页面文件顶部（如 `Index.ets`）添加:
 
 ```ets
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseListPage';
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseDetailPage';
+import 'osslibraries_ui_wear/src/main/ets/pages/OSSLibrariesLicenseListPageWear';
+import 'osslibraries_ui_wear/src/main/ets/pages/OSSLibrariesLicenseDetailPageWear';
 ```
 
 `entry` 模块的 `main_pages.json` 无需改动，只需保留自身页面即可。
@@ -94,48 +78,13 @@ import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseDetailPage';
 
 ```ets
 this.getUIContext().getRouter().pushNamedRoute({
-  name: 'OSSLibrariesLicenseListPage'
-});
-```
-
-## 穿戴应用接入（带预定义 UI）
-
-穿戴设备的 OSSLibraries UI 是独立的 `osslibraries_ui_wear` 模块：
-
-```zsh
-ohpm install osslibraries_ui_wear
-```
-
-在手表模块注册 Hvigor 插件，方法和 `osslibraries_ui` 相同：
-
-```TS
-import { hapTasks } from '@ohos/hvigor-ohos-plugin';
-import { ossScanPlugin } from 'osslibraries-hvigor-plugin';
-
-export default {
-  system: hapTasks,
-  plugins: [ossScanPlugin()]
-}
-```
-
-在手表模块的页面文件顶部（如 `Index.ets`）导入页面以注册命名路由：
-
-```ets
-import 'osslibraries_ui_wear/src/main/ets/pages/OSSLibrariesLicenseListPageWear';
-import 'osslibraries_ui_wear/src/main/ets/pages/OSSLibrariesLicenseDetailPageWear';
-```
-
-然后通过 `pushNamedRoute` 跳转：
-
-```ets
-this.getUIContext().getRouter().pushNamedRoute({
   name: 'OSSLibrariesLicenseListPageWear'
 });
 ```
 
 ## 自定义 UI
 
-可以不使用预定义的 OSSLibraries UI 页面，直接使用 `core` 模块:
+可以不使用预定义的 OSSLibraries Wearable UI 页面，直接使用 `core` 模块:
 
 ```zsh
 ohpm install osslibraries

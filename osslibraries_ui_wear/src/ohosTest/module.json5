@@ -1,0 +1,9 @@
+{
+  module: {
+    name: "osslibraries_ui_wear_test",
+    type: "feature",
+    deviceTypes: ["default"],
+    deliveryWithInstall: true,
+    installationFree: false,
+  },
+}

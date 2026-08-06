@@ -1,0 +1,28 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "OSSLibraries Wear"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "OSSLibraries Wear"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "OSSLibraries Wear"
+    },
+    {
+      "name": "entry_title",
+      "value": "OSSLibraries\nWear"
+    },
+    {
+      "name": "entry_tagline",
+      "value": "适用于 HarmonyOS 的开源许可扫描与展示库"
+    },
+    {
+      "name": "entry_button_view",
+      "value": "开放源代码许可"
+    }
+  ]
+}

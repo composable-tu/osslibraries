@@ -1,0 +1,7 @@
+{
+  module: {
+    name: "osslibraries_ui_wear",
+    type: "har",
+    deviceTypes: ["default"],
+  },
+}

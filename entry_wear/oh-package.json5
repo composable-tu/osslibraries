@@ -1,0 +1,11 @@
+{
+  name: "entry_wear",
+  version: "1.0.0",
+  description: "OSSLibraries entry_wear (Wearable) demo HAP.",
+  main: "",
+  author: "",
+  license: "",
+  dependencies: {
+    osslibraries_ui_wear: "file:../osslibraries_ui_wear",
+  },
+}

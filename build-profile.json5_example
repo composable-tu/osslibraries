@@ -20,6 +20,19 @@
             "useNormalizedOHMUrl": true
           }
         }
+      },
+      {
+        "name": "wearable",
+        "signingConfig": "default",
+        "targetSdkVersion": "6.1.1(24)",
+        "compatibleSdkVersion": "6.0.0(20)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
       }
     ],
     "buildModeSet": [
@@ -51,6 +64,30 @@
     {
       "name": "osslibraries_ui",
       "srcPath": "./osslibraries_ui",
+    },
+    {
+      "name": "osslibraries_ui_wear",
+      "srcPath": "./osslibraries_ui_wear",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "entry_wear",
+      "srcPath": "./entry_wear",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
     }
   ]
 }

@@ -1,4 +1,4 @@
-# OSSLibraries
+# OSSLibraries UI
 
 一个适用于 HarmonyOS 的开放源代码许可扫描与展示库 —— 该包是 OSSLibraries 的预定义 UI 部分。
 

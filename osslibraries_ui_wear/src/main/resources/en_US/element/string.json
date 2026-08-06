@@ -1,0 +1,28 @@
+{
+  "string": [
+    {
+      "name": "osslibraries_wear_title_licenses",
+      "value": "Open Source Licenses"
+    },
+    {
+      "name": "osslibraries_loading",
+      "value": "Loading..."
+    },
+    {
+      "name": "osslibraries_load_failed",
+      "value": "Failed to load: %s"
+    },
+    {
+      "name": "osslibraries_library_not_found",
+      "value": "Library not found."
+    },
+    {
+      "name": "osslibraries_wear_open_website",
+      "value": "Copy link"
+    },
+    {
+      "name": "osslibraries_wear_copied",
+      "value": "Copied"
+    }
+  ]
+}
