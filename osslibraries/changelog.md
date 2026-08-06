@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.3
+
+- 同步 `osslibraries-hvigor-plugin` 上游更改，将 `tag` 字段从 `string` 类型修改为 `string[]` 类型。
+
 ## v0.0.2
 
 - 更新 README 与包描述部分。

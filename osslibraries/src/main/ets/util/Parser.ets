@@ -68,7 +68,7 @@ interface JsonLibrary {
   scm?: JsonScm;
   licenses?: string[]; // hash 引用
   funding?: JsonFunding[];
-  tag?: string;
+  tag?: string[];
 }
 
 interface JsonRoot {
@@ -212,7 +212,7 @@ export class Parser {
     }
 
     // 标签
-    lib.tag = obj.tag ?? '';
+    lib.tag = obj.tag ?? [];
 
     return lib;
   }

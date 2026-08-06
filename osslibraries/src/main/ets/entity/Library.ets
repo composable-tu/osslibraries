@@ -42,7 +42,7 @@ export class Library {
   /** All identified funding opportunities. */
   funding: Funding[] = [];
   /** Optional tag for grouping. */
-  tag: string = '';
+  tag: string[] = [];
 
   /** Returns `uniqueId:artifactVersion` combined. */
   get artifactId(): string {

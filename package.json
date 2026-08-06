@@ -1,7 +1,7 @@
 {
   "type": "module",
   "devDependencies": {
-    "osslibraries-hvigor-plugin": "^0.0.5",
+    "osslibraries-hvigor-plugin": "^0.0.6",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },
