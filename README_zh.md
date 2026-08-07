@@ -98,6 +98,41 @@ this.getUIContext().getRouter().pushNamedRoute({
 });
 ```
 
+## 穿戴应用接入（带预定义 UI）
+
+穿戴设备的 OSSLibraries UI 是独立的 `osslibraries_ui_wear` 模块：
+
+```zsh
+ohpm install osslibraries_ui_wear
+```
+
+在手表模块注册 Hvigor 插件，方法和 `osslibraries_ui` 相同：
+
+```TS
+import { hapTasks } from '@ohos/hvigor-ohos-plugin';
+import { ossScanPlugin } from 'osslibraries-hvigor-plugin';
+
+export default {
+  system: hapTasks,
+  plugins: [ossScanPlugin()]
+}
+```
+
+在手表模块的页面文件顶部（如 `Index.ets`）导入页面以注册命名路由：
+
+```ets
+import 'osslibraries_ui_wear/src/main/ets/pages/OSSLibrariesLicenseListPageWear';
+import 'osslibraries_ui_wear/src/main/ets/pages/OSSLibrariesLicenseDetailPageWear';
+```
+
+然后通过 `pushNamedRoute` 跳转：
+
+```ets
+this.getUIContext().getRouter().pushNamedRoute({
+  name: 'OSSLibrariesLicenseListPageWear'
+});
+```
+
 ## 自定义 UI
 
 可以不使用预定义的 OSSLibraries UI 页面，直接使用 `core` 模块:

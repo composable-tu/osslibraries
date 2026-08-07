@@ -98,6 +98,41 @@ this.getUIContext().getRouter().pushNamedRoute({
 });
 ```
 
+## Wearable Integration (with predefined UI)
+
+The OSSLibraries UI for wearable devices is a separate `osslibraries_ui_wear` module:
+
+```zsh
+ohpm install osslibraries_ui_wear
+```
+
+Register the Hvigor plugin in the wearable module, same as for `osslibraries_ui`:
+
+```TS
+import { hapTasks } from '@ohos/hvigor-ohos-plugin';
+import { ossScanPlugin } from 'osslibraries-hvigor-plugin';
+
+export default {
+  system: hapTasks,
+  plugins: [ossScanPlugin()]
+}
+```
+
+At the top of a page file in the wearable module (e.g. `Index.ets`), import the pages to register the named routes:
+
+```ets
+import 'osslibraries_ui_wear/src/main/ets/pages/OSSLibrariesLicenseListPageWear';
+import 'osslibraries_ui_wear/src/main/ets/pages/OSSLibrariesLicenseDetailPageWear';
+```
+
+Then navigate via `pushNamedRoute`:
+
+```ets
+this.getUIContext().getRouter().pushNamedRoute({
+  name: 'OSSLibrariesLicenseListPageWear'
+});
+```
+
 ## Custom UI
 
 You can skip the predefined OSSLibraries UI pages and use the `core` module directly:

@@ -18,6 +18,7 @@ import { Libs, LibsHolder, Library } from 'osslibraries';
 import { LicenseItem } from '../components/LicenseItem';
 import { LicenseDetailParams } from '../model/RouteParams';
 import { buildTitleBarOpts, getMaterialLevel } from '../components/TitleBarBuilder';
+import { UI_DETAIL_PAGE_ROUTE } from '../constants/RouteNames';
 import { hdsMaterial, HdsNavigation, HdsNavigationTitleMode } from '@kit.UIDesignKit';
 
 /**
@@ -112,7 +113,7 @@ export struct OSSLibrariesLicenseListPage {
   private navigateToDetail(uniqueId: string): void {
     const params: LicenseDetailParams = { uniqueId: uniqueId };
     this.getUIContext().getRouter().pushNamedRoute({
-      name: 'OSSLibrariesLicenseDetailPage',
+      name: UI_DETAIL_PAGE_ROUTE,
       params: params
     });
   }

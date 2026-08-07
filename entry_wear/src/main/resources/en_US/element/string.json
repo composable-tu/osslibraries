@@ -1,0 +1,28 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "OSSLibraries Wear"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "OSSLibraries Wear"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "OSSLibraries Wear"
+    },
+    {
+      "name": "entry_title",
+      "value": "OSSLibraries\nWear"
+    },
+    {
+      "name": "entry_tagline",
+      "value": "OSL Scanner & Viewer for HarmonyOS"
+    },
+    {
+      "name": "entry_button_view",
+      "value": "Open Source Licenses"
+    }
+  ]
+}

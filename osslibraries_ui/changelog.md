@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.6
+
+- 修复：详情页 `openUrl` 中 `startAbility` 的 Promise reject 未捕获（静默失败）问题。
+- 更新 `osslibraries` 上游依赖版本至 0.0.3。
+
 ## v0.0.5
 
 - 修复：详情页的多链接卡片，按下卡片时的样式异常。

@@ -1,0 +1,28 @@
+{
+  "string": [
+    {
+      "name": "osslibraries_wear_title_licenses",
+      "value": "开放源代码许可"
+    },
+    {
+      "name": "osslibraries_loading",
+      "value": "加载中..."
+    },
+    {
+      "name": "osslibraries_load_failed",
+      "value": "加载失败：%s"
+    },
+    {
+      "name": "osslibraries_library_not_found",
+      "value": "未找到该库。"
+    },
+    {
+      "name": "osslibraries_wear_open_website",
+      "value": "复制链接"
+    },
+    {
+      "name": "osslibraries_wear_copied",
+      "value": "已复制"
+    }
+  ]
+}

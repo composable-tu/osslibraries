@@ -1,5 +1,6 @@
 import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseListPage';
 import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseDetailPage';
+import { UI_LIST_PAGE_ROUTE } from 'osslibraries_ui/src/main/ets/constants/RouteNames';
 
 @Entry
 @Component
@@ -51,7 +52,7 @@ struct Index {
           .margin({ top: 24, bottom: 24 })
           .onClick(() => {
             this.getUIContext().getRouter().pushNamedRoute({
-              name: 'OSSLibrariesLicenseListPage'
+              name: UI_LIST_PAGE_ROUTE
             });
           })
       }
