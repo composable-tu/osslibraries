@@ -21,7 +21,6 @@ export struct WearLicenseListItem {
 
   build() {
     Column() {
-      // 库名称
       Text(this.lib.name.length > 0 ? this.lib.name : this.lib.uniqueId)
         .fontSize(14)
         .fontWeight(FontWeight.Medium)
@@ -29,7 +28,6 @@ export struct WearLicenseListItem {
         .textOverflow({ overflow: TextOverflow.Ellipsis })
         .width('100%')
 
-      // 版本 · 许可
       if (this.subtitle().length > 0) {
         Text(this.subtitle())
           .fontSize(11)

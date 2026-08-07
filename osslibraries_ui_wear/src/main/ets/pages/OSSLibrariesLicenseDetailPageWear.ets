@@ -16,6 +16,7 @@ import { ArcList, ArcListItem, ArcListAttribute, ArcListItemAttribute, Component
 import { Libs, Library, License, LibsHolder } from 'osslibraries';
 import { LicenseDetailParams } from '../model/RouteParams';
 import { WEAR_ARC_LIST_SIZE, WEAR_ARC_LIST_RADIUS, WEAR_ARC_ITEM_WIDTH, WEAR_ARC_ITEM_RADIUS } from '../constants/WearLayoutConstants';
+import { WearScreenUtil } from '../utils/WearScreenUtil';
 
 /**
  * 穿戴端开源许可证详情页。
@@ -42,9 +43,12 @@ export struct OSSLibrariesLicenseDetailPageWear {
   @State lib: Library = new Library();
   @State notFound: boolean = false;
   @State scmUrl: string = '';
+  @State isRoundScreen: boolean = true;
   private arcListHeader: ComponentContent<string> = new ComponentContent(this.getUIContext(), wrapBuilder<[string]>(detailPageHeader), '');
 
   aboutToAppear(): void {
+    this.isRoundScreen = WearScreenUtil.isRoundScreen();
+
     const params: Object = this.getUIContext().getRouter().getParams() as Object;
     const detail: LicenseDetailParams = params as LicenseDetailParams;
     const uniqueId: string = detail?.uniqueId ?? '';
@@ -72,69 +76,117 @@ export struct OSSLibrariesLicenseDetailPageWear {
           .textAlign(TextAlign.Center)
           .padding({ left: 24, right: 24 })
       } else {
-        ArcList({ initialIndex: 0, header: this.arcListHeader }) {
-          // website 链接卡片
-          if (this.lib.website.length > 0) {
-            ArcListItem() {
-              this.LinkCard(this.lib.website)
-            }
-            .width(WEAR_ARC_ITEM_WIDTH)
-            .borderRadius(WEAR_ARC_ITEM_RADIUS)
-            .backgroundColor($r('sys.color.comp_background_list_card'))
-            .onClick(() => {
-              this.copyUrl(this.lib.website);
-            })
-          }
-
-          // 仓库地址链接卡片
-          if (this.scmUrl.length > 0 && this.scmUrl !== this.lib.website) {
-            ArcListItem() {
-              this.LinkCard(this.scmUrl)
-            }
-            .width(WEAR_ARC_ITEM_WIDTH)
-            .borderRadius(WEAR_ARC_ITEM_RADIUS)
-            .backgroundColor($r('sys.color.comp_background_list_card'))
-            .onClick(() => {
-              this.copyUrl(this.scmUrl);
-            })
-          }
-
-          // 许可证全文
-          ForEach(
-            this.lib.licenses.filter((lic: License) => lic.licenseContent.length > 0),
-            (lic: License) => {
+        if (this.isRoundScreen) {
+          ArcList({ initialIndex: 0, header: this.arcListHeader }) {
+            if (this.lib.website.length > 0) {
               ArcListItem() {
-                Column() {
-                  Text(lic.licenseContent)
-                    .fontSize(12)
-                    .fontColor($r('sys.color.font_primary'))
-                    .lineHeight(18)
-                    .width('100%')
-                    .copyOption(CopyOptions.LocalDevice)
-                }
-                .alignItems(HorizontalAlign.Start)
-                .width('100%')
-                .padding(16)
+                this.LinkCard(this.lib.website)
               }
               .width(WEAR_ARC_ITEM_WIDTH)
               .borderRadius(WEAR_ARC_ITEM_RADIUS)
               .backgroundColor($r('sys.color.comp_background_list_card'))
-              .autoScale(false)
-            },
-            (lic: License) => lic.hash
-          )
+              .onClick(() => {
+                this.copyUrl(this.lib.website);
+              })
+            }
+
+            if (this.scmUrl.length > 0 && this.scmUrl !== this.lib.website) {
+              ArcListItem() {
+                this.LinkCard(this.scmUrl)
+              }
+              .width(WEAR_ARC_ITEM_WIDTH)
+              .borderRadius(WEAR_ARC_ITEM_RADIUS)
+              .backgroundColor($r('sys.color.comp_background_list_card'))
+              .onClick(() => {
+                this.copyUrl(this.scmUrl);
+              })
+            }
+
+            ForEach(
+              this.lib.licenses.filter((lic: License) => lic.licenseContent.length > 0),
+              (lic: License) => {
+                ArcListItem() {
+                  this.LicenseContent(lic)
+                }
+                .width(WEAR_ARC_ITEM_WIDTH)
+                .borderRadius(WEAR_ARC_ITEM_RADIUS)
+                .backgroundColor($r('sys.color.comp_background_list_card'))
+                .autoScale(false)
+              },
+              (lic: License) => lic.hash
+            )
+          }
+          .width(WEAR_ARC_LIST_SIZE)
+          .height(WEAR_ARC_LIST_SIZE)
+          .space(LengthMetrics.px(10))
+          .borderRadius(WEAR_ARC_LIST_RADIUS)
+          .backgroundColor($r('sys.color.ohos_id_color_background'))
+          .chainAnimation(true)
+          .cachedCount(5)
+          .digitalCrownSensitivity(CrownSensitivity.MEDIUM)
+          .focusable(true)
+          .focusOnTouch(true)
+          .defaultFocus(true)
+        } else {
+          List({ space: '10px' }) {
+            ListItem() {
+              Text(this.lib.name.length > 0 ? this.lib.name : this.lib.uniqueId)
+                .fontColor($r('sys.color.font_primary'))
+                .fontSize(14)
+                .fontWeight(FontWeight.Medium)
+                .maxLines(1)
+                .textOverflow({ overflow: TextOverflow.Ellipsis })
+                .width('100%')
+                .textAlign(TextAlign.Center)
+                .padding({ top: 10, bottom: 10 })
+            }
+
+            if (this.lib.website.length > 0) {
+              ListItem() {
+                this.LinkCard(this.lib.website)
+              }
+              .width('100%')
+              .borderRadius(WEAR_ARC_ITEM_RADIUS)
+              .backgroundColor($r('sys.color.comp_background_list_card'))
+              .onClick(() => {
+                this.copyUrl(this.lib.website);
+              })
+            }
+
+            if (this.scmUrl.length > 0 && this.scmUrl !== this.lib.website) {
+              ListItem() {
+                this.LinkCard(this.scmUrl)
+              }
+              .width('100%')
+              .borderRadius(WEAR_ARC_ITEM_RADIUS)
+              .backgroundColor($r('sys.color.comp_background_list_card'))
+              .onClick(() => {
+                this.copyUrl(this.scmUrl);
+              })
+            }
+
+            ForEach(
+              this.lib.licenses.filter((lic: License) => lic.licenseContent.length > 0),
+              (lic: License) => {
+                ListItem() {
+                  this.LicenseContent(lic)
+                }
+                .width('100%')
+                .borderRadius(WEAR_ARC_ITEM_RADIUS)
+                .backgroundColor($r('sys.color.comp_background_list_card'))
+              },
+              (lic: License) => lic.hash
+            )
+          }
+          .width('100%')
+          .height('100%')
+          .padding({ left: 12, right: 12, top: 6, bottom: 6 })
+          .backgroundColor($r('sys.color.ohos_id_color_background'))
+          .cachedCount(5)
+          .focusable(true)
+          .focusOnTouch(true)
+          .defaultFocus(true)
         }
-        .width(WEAR_ARC_LIST_SIZE)
-        .height(WEAR_ARC_LIST_SIZE)
-        .space(LengthMetrics.px(10))
-        .borderRadius(WEAR_ARC_LIST_RADIUS)
-        .backgroundColor($r('sys.color.ohos_id_color_background'))
-        .chainAnimation(true)
-        .cachedCount(4)
-        .digitalCrownSensitivity(CrownSensitivity.MEDIUM)
-        .focusable(true)
-        .focusOnTouch(true)
-        .defaultFocus(true)
       }
     }
     .width('100%')
@@ -152,6 +204,21 @@ export struct OSSLibrariesLicenseDetailPageWear {
         .fontSize(12)
         .fontColor($r('sys.color.font_primary'))
         .width('100%')
+    }
+    .alignItems(HorizontalAlign.Start)
+    .width('100%')
+    .padding(16)
+  }
+
+  @Builder
+  LicenseContent(lic: License) {
+    Column() {
+      Text(lic.licenseContent)
+        .fontSize(12)
+        .fontColor($r('sys.color.font_primary'))
+        .lineHeight(18)
+        .width('100%')
+        .copyOption(CopyOptions.LocalDevice)
     }
     .alignItems(HorizontalAlign.Start)
     .width('100%')

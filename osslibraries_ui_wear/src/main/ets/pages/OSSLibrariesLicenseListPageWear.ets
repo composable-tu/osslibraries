@@ -18,6 +18,7 @@ import { Libs, Library, LibsHolder } from 'osslibraries';
 import { WearLicenseListItem } from '../components/WearLicenseListItem';
 import { LicenseDetailParams } from '../model/RouteParams';
 import { WEAR_ARC_LIST_SIZE, WEAR_ARC_LIST_RADIUS, WEAR_ARC_ITEM_WIDTH, WEAR_ARC_ITEM_RADIUS } from '../constants/WearLayoutConstants';
+import { WearScreenUtil } from '../utils/WearScreenUtil';
 
 /**
  * 穿戴端开源许可证列表页。
@@ -42,9 +43,11 @@ export struct OSSLibrariesLicenseListPageWear {
   @State isLoaded: boolean = false;
   @State libs: Libs = new Libs();
   @State errorMsg: string = '';
+  @State isRoundScreen: boolean = true;
   private arcListHeader: ComponentContent<Object> = new ComponentContent(this.getUIContext(), wrapBuilder(listPageHeader));
 
   aboutToAppear(): void {
+    this.isRoundScreen = WearScreenUtil.isRoundScreen();
     this.loadData();
   }
 
@@ -77,32 +80,68 @@ export struct OSSLibrariesLicenseListPageWear {
           .textAlign(TextAlign.Center)
           .padding({ left: 24, right: 24 })
       } else {
-        ArcList({ initialIndex: 0, header: this.arcListHeader }) {
-          ForEach(this.libs.libraries, (lib: Library) => {
-            ArcListItem() {
-              WearLicenseListItem({ lib: lib })
-            }
-            .width(WEAR_ARC_ITEM_WIDTH)
-            .borderRadius(WEAR_ARC_ITEM_RADIUS)
-            .backgroundColor($r('sys.color.comp_background_list_card'))
-            .onClick(() => {
-              if (lib.licenses.length > 0 || lib.website.length > 0) {
-                this.navigateToDetail(lib.uniqueId);
+        if (this.isRoundScreen) {
+          ArcList({ initialIndex: 0, header: this.arcListHeader }) {
+            ForEach(this.libs.libraries, (lib: Library) => {
+              ArcListItem() {
+                WearLicenseListItem({ lib: lib })
               }
-            })
-          }, (lib: Library) => lib.uniqueId)
+              .width(WEAR_ARC_ITEM_WIDTH)
+              .borderRadius(WEAR_ARC_ITEM_RADIUS)
+              .backgroundColor($r('sys.color.comp_background_list_card'))
+              .onClick(() => {
+                if (lib.licenses.length > 0 || lib.website.length > 0) {
+                  this.navigateToDetail(lib.uniqueId);
+                }
+              })
+            }, (lib: Library) => lib.uniqueId)
+          }
+          .width(WEAR_ARC_LIST_SIZE)
+          .height(WEAR_ARC_LIST_SIZE)
+          .space(LengthMetrics.px(10))
+          .borderRadius(WEAR_ARC_LIST_RADIUS)
+          .backgroundColor($r('sys.color.ohos_id_color_background'))
+          .chainAnimation(true)
+          .cachedCount(5)
+          .digitalCrownSensitivity(CrownSensitivity.MEDIUM)
+          .focusable(true)
+          .focusOnTouch(true)
+          .defaultFocus(true)
+        } else {
+          List({ space: '10px' }) {
+            ListItem() {
+              Text($r('app.string.osslibraries_wear_title_licenses'))
+                .fontColor($r('sys.color.font_primary'))
+                .fontSize(14)
+                .fontWeight(FontWeight.Medium)
+                .width('100%')
+                .textAlign(TextAlign.Center)
+                .padding({ top: 10, bottom: 10 })
+            }
+
+            ForEach(this.libs.libraries, (lib: Library) => {
+              ListItem() {
+                WearLicenseListItem({ lib: lib })
+              }
+              .width('100%')
+              .borderRadius(WEAR_ARC_ITEM_RADIUS)
+              .backgroundColor($r('sys.color.comp_background_list_card'))
+              .onClick(() => {
+                if (lib.licenses.length > 0 || lib.website.length > 0) {
+                  this.navigateToDetail(lib.uniqueId);
+                }
+              })
+            }, (lib: Library) => lib.uniqueId)
+          }
+          .width('100%')
+          .height('100%')
+          .padding({ left: 12, right: 12, top: 6, bottom: 6 })
+          .backgroundColor($r('sys.color.ohos_id_color_background'))
+          .cachedCount(5)
+          .focusable(true)
+          .focusOnTouch(true)
+          .defaultFocus(true)
         }
-        .width(WEAR_ARC_LIST_SIZE)
-        .height(WEAR_ARC_LIST_SIZE)
-        .space(LengthMetrics.px(10))
-        .borderRadius(WEAR_ARC_LIST_RADIUS)
-        .backgroundColor($r('sys.color.ohos_id_color_background'))
-        .chainAnimation(true)
-        .cachedCount(4)
-        .digitalCrownSensitivity(CrownSensitivity.MEDIUM)
-        .focusable(true)
-        .focusOnTouch(true)
-        .defaultFocus(true)
       }
     }
     .width('100%')

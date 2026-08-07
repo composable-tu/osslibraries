@@ -1,6 +1,6 @@
 {
   name: "osslibraries_ui_wear",
-  version: "0.0.1",
+  version: "0.0.2",
   description: "一个适用于 HarmonyOS 的开放源代码许可扫描与展示库 —— 该包是 OSSLibraries 的预定义 UI（Wearable）部分。",
   main: "Index.ets",
   author: {

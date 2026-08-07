@@ -10,7 +10,7 @@ OSSLibraries is an open-source license scanning and display library for HarmonyO
 
 - **`osslibraries`** (core): data models, JSON parser, and cross-page holder. Used for custom UI.
 - **`osslibraries_ui`**: predefined list page, detail page, and `LicenseItem` component for phone/tablet. Ready out of the box.
-- **`osslibraries_ui_wear`**: predefined list page, detail page, and `WearLicenseListItem` component for round wearable faces, built on ArkUI `ArcList`.
+- **`osslibraries_ui_wear`**: predefined list page, detail page, and `WearLicenseListItem` component for wearable devices. Adapts to screen shape via `display.screenShape`: round faces use ArkUI `ArcList` (digital-crown scroll, chain animation), square faces fall back to a regular `List`.
 
 License data is generated at compile time by a standalone Hvigor plugin **`osslibraries-hvigor-plugin`** (npm package) that scans `oh_modules/` and produces `entry/src/main/resources/rawfile/osslibraries.json`.
 

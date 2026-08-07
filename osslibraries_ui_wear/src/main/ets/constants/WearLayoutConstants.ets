@@ -10,12 +10,7 @@
  * See the Mulan PSL v2 for more details.
  */
 
-/**
- * 圆形表盘 ArcList 布局尺寸常量。
- *
- * 466px 对应典型圆形表盘视口直径；414px 为其内接正方形边长（卡片宽），
- * 圆角值取对应半径，使卡片贴合圆形与圆角矩形视觉。
- */
+/** 圆形表盘 ArcList 布局尺寸常量。466px 为典型圆形表盘视口直径，414px 为其内接正方形边长。 */
 
 /** ArcList 视口宽/高（圆形直径）。 */
 export const WEAR_ARC_LIST_SIZE: string = '466px';
