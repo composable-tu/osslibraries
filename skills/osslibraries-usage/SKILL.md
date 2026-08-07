@@ -207,8 +207,8 @@ this.getUIContext().getRouter().pushNamedRoute({
 
 ### Wearable UI behavior (differs from phone UI)
 
-- **Pages & routes**: list page struct `OSSLibrariesLicenseListPageWear` registers route **`OSSLibrariesLicenseListPageWear`** (this is the route you push to enter). Detail page struct `OSSLibrariesLicenseDetailPageWear` registers route `OSSSLibrariesLicenseDetailPageWear` (note the triple-S prefix `OSSSLibraries...`) — but you don't push it manually; the list page navigates to it via `pushNamedRoute` on item tap.
-- **Layout**: both pages render inside a 466×466 round `ArcList` and show a page title via the ArcList `header` (list page: "开放源代码许可" / "Open Source Licenses"; detail page: the selected library's name).
+- **Pages & routes**: list page struct `OSSLibrariesLicenseListPageWear` registers route **`OSSLibrariesLicenseListPageWear`** (this is the route you push to enter). Detail page struct `OSSLibrariesLicenseDetailPageWear` registers route `OSSLibrariesLicenseDetailPageWear` — you don't push it manually; the list page navigates to it via `pushNamedRoute` on item tap. Both route names are centralized in `WearRouteNames.ets` (`WEAR_LIST_PAGE_ROUTE` / `WEAR_DETAIL_PAGE_ROUTE`); host apps should import and reuse these constants instead of string literals.
+- **Layout**: both pages detect the screen shape via `display.screenShape` (`WearScreenUtil`). Round screens render inside a 466×466 `ArcList` (with `header`-based title); square screens fall back to a regular `List` at `width('100%')`. List page title: "开放源代码许可" / "Open Source Licenses"; detail page title: the selected library's name.
 - **Card sizing**: `ArcListItem` cards have no fixed height — they auto-size to content. Long license text scrolls inside the `ArcList`; the license item sets `autoScale(false)` to prevent text distortion near the circle edges.
 - **Link tap = copy**: wearable devices have no standalone browser. Tapping a link card (website / scm.url) copies the URL to the system clipboard and shows a "已复制" / "Copied" toast — it does **not** open the URL.
 - **List item**: `WearLicenseListItem` shows library name (primary) and a `v{version} · {license}` subtitle (secondary), left-aligned.
@@ -264,12 +264,14 @@ this.getUIContext().getRouter().pushNamedRoute({
 | `getMaterialLevel`              | Material level probe                                         |
 | `LicenseDetailParams`           | Detail page route params interface, field `uniqueId: string` |
 
+Route names are centralized in `RouteNames.ets` (`UI_LIST_PAGE_ROUTE` / `UI_DETAIL_PAGE_ROUTE`); host apps should import and reuse these constants instead of string literals.
+
 ### ui_wear (`osslibraries_ui_wear`) exports
 
 | Name                                | Description                                                                                    |
 |-------------------------------------|------------------------------------------------------------------------------------------------|
-| `OSSLibrariesLicenseListPageWear`   | Wearable list page. Route name: `OSSLibrariesLicenseListPageWear`                              |
-| `OSSLibrariesLicenseDetailPageWear` | Wearable detail page. Route name: `OSSSLibrariesLicenseDetailPageWear` (triple-S prefix)      |
+| `OSSLibrariesLicenseListPageWear`   | Wearable list page. Route name: `OSSLibrariesLicenseListPageWear`                          |
+| `OSSLibrariesLicenseDetailPageWear` | Wearable detail page. Route name: `OSSLibrariesLicenseDetailPageWear`                     |
 | `WearLicenseListItem`               | Wearable list item component, accepts `@Prop lib: Library`                                     |
 | `LicenseDetailParams`               | Detail page route params interface, field `uniqueId: string` (same shape as `osslibraries_ui`) |
 

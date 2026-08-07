@@ -1,5 +1,6 @@
 import 'osslibraries_ui_wear/src/main/ets/pages/OSSLibrariesLicenseListPageWear';
 import 'osslibraries_ui_wear/src/main/ets/pages/OSSLibrariesLicenseDetailPageWear';
+import { WEAR_LIST_PAGE_ROUTE } from 'osslibraries_ui_wear/src/main/ets/constants/WearRouteNames';
 
 @Entry
 @Component
@@ -34,7 +35,7 @@ struct Index {
         .width(168)
         .onClick(() => {
           this.getUIContext().getRouter().pushNamedRoute({
-            name: 'OSSLibrariesLicenseListPageWear'
+            name: WEAR_LIST_PAGE_ROUTE
           });
         })
     }

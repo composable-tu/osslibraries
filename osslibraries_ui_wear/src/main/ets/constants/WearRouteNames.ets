@@ -10,11 +10,10 @@
  * See the Mulan PSL v2 for more details.
  */
 
-/**
- * Router parameters for navigating to the license detail page.
- * Declared ONCE here and imported by both the list and detail pages.
- */
-export interface LicenseDetailParams {
-  /** The uniqueId of the library to display. */
-  uniqueId: string;
-}
+/** 穿戴端命名路由名常量，集中定义以避免拼写错误。 */
+
+/** 列表页路由名。 */
+export const WEAR_LIST_PAGE_ROUTE: string = 'OSSLibrariesLicenseListPageWear';
+
+/** 详情页路由名（由列表页 push 进入）。 */
+export const WEAR_DETAIL_PAGE_ROUTE: string = 'OSSLibrariesLicenseDetailPageWear';

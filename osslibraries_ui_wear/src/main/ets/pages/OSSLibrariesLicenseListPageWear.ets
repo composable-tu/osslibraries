@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2026 composable-tu
- * OSSLibraries UI is licensed under Mulan PSL v2.
+ * OSSLibraries UI (Wearable) is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -18,6 +18,7 @@ import { Libs, Library, LibsHolder } from 'osslibraries';
 import { WearLicenseListItem } from '../components/WearLicenseListItem';
 import { LicenseDetailParams } from '../model/RouteParams';
 import { WEAR_ARC_LIST_SIZE, WEAR_ARC_LIST_RADIUS, WEAR_ARC_ITEM_WIDTH, WEAR_ARC_ITEM_RADIUS } from '../constants/WearLayoutConstants';
+import { WEAR_DETAIL_PAGE_ROUTE } from '../constants/WearRouteNames';
 import { WearScreenUtil } from '../utils/WearScreenUtil';
 
 /**
@@ -155,7 +156,7 @@ export struct OSSLibrariesLicenseListPageWear {
   private navigateToDetail(uniqueId: string): void {
     const params: LicenseDetailParams = { uniqueId: uniqueId };
     this.getUIContext().getRouter().pushNamedRoute({
-      name: 'OSSSLibrariesLicenseDetailPageWear',
+      name: WEAR_DETAIL_PAGE_ROUTE,
       params: params
     });
   }

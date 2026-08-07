@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2026 composable-tu
- * OSSLibraries UI is licensed under Mulan PSL v2.
+ * OSSLibraries UI (Wearable) is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
  *          http://license.coscl.org.cn/MulanPSL2
@@ -37,7 +37,7 @@ function detailPageHeader(name: string) {
   .padding({ top: 10, bottom: 10 })
 }
 
-@Entry({ routeName: 'OSSSLibrariesLicenseDetailPageWear' })
+@Entry({ routeName: 'OSSLibrariesLicenseDetailPageWear' })
 @Component
 export struct OSSLibrariesLicenseDetailPageWear {
   @State lib: Library = new Library();
