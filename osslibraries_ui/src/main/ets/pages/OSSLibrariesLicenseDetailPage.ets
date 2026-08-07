@@ -181,6 +181,9 @@ export struct OSSLibrariesLicenseDetailPage {
       context.startAbility({
         action: 'ohos.want.action.viewData',
         uri: url,
+      }).catch((e: BusinessError) => {
+        hilog.error(0x0001, 'OSSLibrariesLicenseDetailPage',
+          `openUrl startAbility failed: code=${e.code}, message=${e.message}`);
       });
     } catch (e) {
       const err: BusinessError = e as BusinessError;

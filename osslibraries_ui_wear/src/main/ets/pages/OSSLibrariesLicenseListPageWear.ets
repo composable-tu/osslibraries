@@ -17,6 +17,7 @@ import { ArcList, ArcListItem, ArcListAttribute, ArcListItemAttribute, Component
 import { Libs, Library, LibsHolder } from 'osslibraries';
 import { WearLicenseListItem } from '../components/WearLicenseListItem';
 import { LicenseDetailParams } from '../model/RouteParams';
+import { WEAR_ARC_LIST_SIZE, WEAR_ARC_LIST_RADIUS, WEAR_ARC_ITEM_WIDTH, WEAR_ARC_ITEM_RADIUS } from '../constants/WearLayoutConstants';
 
 /**
  * 穿戴端开源许可证列表页。
@@ -81,8 +82,8 @@ export struct OSSLibrariesLicenseListPageWear {
             ArcListItem() {
               WearLicenseListItem({ lib: lib })
             }
-            .width('414px')
-            .borderRadius('65px')
+            .width(WEAR_ARC_ITEM_WIDTH)
+            .borderRadius(WEAR_ARC_ITEM_RADIUS)
             .backgroundColor($r('sys.color.comp_background_list_card'))
             .onClick(() => {
               if (lib.licenses.length > 0 || lib.website.length > 0) {
@@ -91,10 +92,10 @@ export struct OSSLibrariesLicenseListPageWear {
             })
           }, (lib: Library) => lib.uniqueId)
         }
-        .width('466px')
-        .height('466px')
+        .width(WEAR_ARC_LIST_SIZE)
+        .height(WEAR_ARC_LIST_SIZE)
         .space(LengthMetrics.px(10))
-        .borderRadius('233px')
+        .borderRadius(WEAR_ARC_LIST_RADIUS)
         .backgroundColor($r('sys.color.ohos_id_color_background'))
         .chainAnimation(true)
         .cachedCount(4)

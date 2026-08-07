@@ -15,6 +15,7 @@ import { hilog } from '@kit.PerformanceAnalysisKit';
 import { ArcList, ArcListItem, ArcListAttribute, ArcListItemAttribute, ComponentContent, LengthMetrics } from '@kit.ArkUI';
 import { Libs, Library, License, LibsHolder } from 'osslibraries';
 import { LicenseDetailParams } from '../model/RouteParams';
+import { WEAR_ARC_LIST_SIZE, WEAR_ARC_LIST_RADIUS, WEAR_ARC_ITEM_WIDTH, WEAR_ARC_ITEM_RADIUS } from '../constants/WearLayoutConstants';
 
 /**
  * 穿戴端开源许可证详情页。
@@ -77,8 +78,8 @@ export struct OSSLibrariesLicenseDetailPageWear {
             ArcListItem() {
               this.LinkCard(this.lib.website)
             }
-            .width('414px')
-            .borderRadius('65px')
+            .width(WEAR_ARC_ITEM_WIDTH)
+            .borderRadius(WEAR_ARC_ITEM_RADIUS)
             .backgroundColor($r('sys.color.comp_background_list_card'))
             .onClick(() => {
               this.copyUrl(this.lib.website);
@@ -90,8 +91,8 @@ export struct OSSLibrariesLicenseDetailPageWear {
             ArcListItem() {
               this.LinkCard(this.scmUrl)
             }
-            .width('414px')
-            .borderRadius('65px')
+            .width(WEAR_ARC_ITEM_WIDTH)
+            .borderRadius(WEAR_ARC_ITEM_RADIUS)
             .backgroundColor($r('sys.color.comp_background_list_card'))
             .onClick(() => {
               this.copyUrl(this.scmUrl);
@@ -115,18 +116,18 @@ export struct OSSLibrariesLicenseDetailPageWear {
                 .width('100%')
                 .padding(16)
               }
-              .width('414px')
-              .borderRadius('65px')
+              .width(WEAR_ARC_ITEM_WIDTH)
+              .borderRadius(WEAR_ARC_ITEM_RADIUS)
               .backgroundColor($r('sys.color.comp_background_list_card'))
               .autoScale(false)
             },
             (lic: License) => lic.hash
           )
         }
-        .width('466px')
-        .height('466px')
+        .width(WEAR_ARC_LIST_SIZE)
+        .height(WEAR_ARC_LIST_SIZE)
         .space(LengthMetrics.px(10))
-        .borderRadius('233px')
+        .borderRadius(WEAR_ARC_LIST_RADIUS)
         .backgroundColor($r('sys.color.ohos_id_color_background'))
         .chainAnimation(true)
         .cachedCount(4)
@@ -169,6 +170,9 @@ export struct OSSLibrariesLicenseDetailPageWear {
           message: $r('app.string.osslibraries_wear_copied'),
           duration: 1500
         });
+      }).catch((e: BusinessError) => {
+        hilog.error(0x0001, 'OSSLibrariesLicenseDetailPageWear',
+          `copyUrl setData failed: code=${e.code}, message=${e.message}`);
       });
     } catch (e) {
       const err: BusinessError = e as BusinessError;
