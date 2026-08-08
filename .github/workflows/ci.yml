@@ -1,0 +1,56 @@
+name: CI
+on: [push, pull_request]
+
+permissions: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgl1-mesa-dev
+        shell: bash
+
+      - name: Setup HarmonyOS CLI tools
+        uses: ErBWs/setup-ohos@v2
+        with:
+          version: 6.1.1.280
+          cache: true
+
+      - name: Verify CLT layout
+        run: |
+          echo "DEVECO_CLI_CLT_PATH=$HOME/ohos-sdk/command-line-tools" >> "$GITHUB_ENV"
+          test -f "$HOME/ohos-sdk/command-line-tools/version.txt"
+          test -f "$HOME/ohos-sdk/command-line-tools/ohpm/bin/pm-cli.js"
+          test -f "$HOME/ohos-sdk/command-line-tools/hvigor/bin/hvigorw.js"
+
+      - uses: pnpm/action-setup@v6.0.9
+        with:
+          version: 11
+
+      - run: corepack enable
+      - uses: voidzero-dev/setup-vp@v1
+        with:
+          node-version: 26
+          cache: true
+
+      - name: Install npm dependencies
+        run: vp install
+
+      - name: Install ohpm dependencies
+        run: devecocli build clean && ohpm install
+
+      - name: Build
+        run: devecocli build

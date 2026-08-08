@@ -10,6 +10,7 @@ minimumReleaseAgeExclude:
   - '@voidzero-dev/vite-plus-win32-arm64-msvc@0.2.8'
   - '@voidzero-dev/vite-plus-win32-x64-msvc@0.2.8'
   - vite-plus@0.2.8
+  - '@deveco/deveco-cli@1.2.2'
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@0.2.8
   vite-plus: 0.2.8

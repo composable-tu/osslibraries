@@ -1,6 +1,7 @@
 {
   "type": "module",
   "devDependencies": {
+    "@deveco/deveco-cli": "^1.2.2",
     "osslibraries-hvigor-plugin": "^0.0.6",
     "vite": "catalog:",
     "vite-plus": "catalog:"
