@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: "21"
 
       - name: Install dependencies
         run: |
@@ -26,7 +26,7 @@ jobs:
       - name: Setup HarmonyOS CLI tools
         uses: ErBWs/setup-ohos@v2
         with:
-          version: 6.1.1.280
+          version: 26.0.0.621
           cache: true
 
       - name: Verify CLT layout
@@ -36,9 +36,11 @@ jobs:
           test -f "$HOME/ohos-sdk/command-line-tools/ohpm/bin/pm-cli.js"
           test -f "$HOME/ohos-sdk/command-line-tools/hvigor/bin/hvigorw.js"
 
-      - uses: pnpm/action-setup@v6.0.9
+      - uses: pnpm/setup@v2
         with:
           version: 11
+          runtime: node@26
+          cache: true
 
       - run: corepack enable
       - uses: voidzero-dev/setup-vp@v1
@@ -49,8 +51,10 @@ jobs:
       - name: Install npm dependencies
         run: vp install
 
+      - run: mv build-profile.json5_example build-profile.json5
+
       - name: Install ohpm dependencies
-        run: devecocli build clean && ohpm install
+        run: ohpm install
 
       - name: Build
-        run: devecocli build
+        run: vpx devecocli build --modules entry entry_wear

@@ -1,16 +1,16 @@
 minimumReleaseAgeExclude:
   - osslibraries-hvigor-plugin@0.0.1 || 0.0.2 || 0.0.3 || 0.0.4 || 0.0.5 || 0.0.6
-  - '@voidzero-dev/vite-plus-core@0.2.8'
-  - '@voidzero-dev/vite-plus-darwin-arm64@0.2.8'
-  - '@voidzero-dev/vite-plus-darwin-x64@0.2.8'
-  - '@voidzero-dev/vite-plus-linux-arm64-gnu@0.2.8'
-  - '@voidzero-dev/vite-plus-linux-arm64-musl@0.2.8'
-  - '@voidzero-dev/vite-plus-linux-x64-gnu@0.2.8'
-  - '@voidzero-dev/vite-plus-linux-x64-musl@0.2.8'
-  - '@voidzero-dev/vite-plus-win32-arm64-msvc@0.2.8'
-  - '@voidzero-dev/vite-plus-win32-x64-msvc@0.2.8'
+  - "@voidzero-dev/vite-plus-core@0.2.8"
+  - "@voidzero-dev/vite-plus-darwin-arm64@0.2.8"
+  - "@voidzero-dev/vite-plus-darwin-x64@0.2.8"
+  - "@voidzero-dev/vite-plus-linux-arm64-gnu@0.2.8"
+  - "@voidzero-dev/vite-plus-linux-arm64-musl@0.2.8"
+  - "@voidzero-dev/vite-plus-linux-x64-gnu@0.2.8"
+  - "@voidzero-dev/vite-plus-linux-x64-musl@0.2.8"
+  - "@voidzero-dev/vite-plus-win32-arm64-msvc@0.2.8"
+  - "@voidzero-dev/vite-plus-win32-x64-msvc@0.2.8"
   - vite-plus@0.2.8
-  - '@deveco/deveco-cli@1.2.2'
+  - "@deveco/deveco-cli@1.2.2"
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@0.2.8
   vite-plus: 0.2.8

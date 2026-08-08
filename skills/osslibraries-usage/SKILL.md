@@ -39,7 +39,7 @@ Two independent blockers apply to this library:
 Confirm the user's intended path before integrating:
 
 | User goal                           | Package to install     | Plugin needed?           | Import pages?               |
-|-------------------------------------|------------------------|--------------------------|-----------------------------|
+| ----------------------------------- | ---------------------- | ------------------------ | --------------------------- |
 | Predefined pages (phone/tablet)     | `osslibraries_ui`      | Yes                      | Yes (register named routes) |
 | Predefined pages (wearable)         | `osslibraries_ui_wear` | Yes                      | Yes (register named routes) |
 | Fully custom UI                     | `osslibraries`         | Yes                      | No                          |
@@ -219,7 +219,7 @@ this.getUIContext().getRouter().pushNamedRoute({
 ### core (`osslibraries`) exports
 
 | Name                                             | Type          | Description                                                              |
-|--------------------------------------------------|---------------|--------------------------------------------------------------------------|
+| ------------------------------------------------ | ------------- | ------------------------------------------------------------------------ |
 | `Libs`                                           | class         | Main entry point. Holds `libraries: Library[]` and `licenses: License[]` |
 | `Libs.fromJson(json)`                            | static method | Builds from a JSON string; libraries sorted by name                      |
 | `libs.findLibrary(uniqueId)`                     | method        | Finds a library by uniqueId; returns `undefined` if not found            |
@@ -256,7 +256,7 @@ this.getUIContext().getRouter().pushNamedRoute({
 ### ui (`osslibraries_ui`) exports
 
 | Name                            | Description                                                  |
-|---------------------------------|--------------------------------------------------------------|
+| ------------------------------- | ------------------------------------------------------------ |
 | `OSSLibrariesLicenseListPage`   | List page (named route name is the same)                     |
 | `OSSLibrariesLicenseDetailPage` | Detail page (named route name is the same)                   |
 | `LicenseItem`                   | Single library card component                                |
@@ -269,9 +269,9 @@ Route names are centralized in `RouteNames.ets` (`UI_LIST_PAGE_ROUTE` / `UI_DETA
 ### ui_wear (`osslibraries_ui_wear`) exports
 
 | Name                                | Description                                                                                    |
-|-------------------------------------|------------------------------------------------------------------------------------------------|
-| `OSSLibrariesLicenseListPageWear`   | Wearable list page. Route name: `OSSLibrariesLicenseListPageWear`                          |
-| `OSSLibrariesLicenseDetailPageWear` | Wearable detail page. Route name: `OSSLibrariesLicenseDetailPageWear`                     |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `OSSLibrariesLicenseListPageWear`   | Wearable list page. Route name: `OSSLibrariesLicenseListPageWear`                              |
+| `OSSLibrariesLicenseDetailPageWear` | Wearable detail page. Route name: `OSSLibrariesLicenseDetailPageWear`                          |
 | `WearLicenseListItem`               | Wearable list item component, accepts `@Prop lib: Library`                                     |
 | `LicenseDetailParams`               | Detail page route params interface, field `uniqueId: string` (same shape as `osslibraries_ui`) |
 
