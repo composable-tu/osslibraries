@@ -5,5 +5,5 @@ export default {
   system: hapTasks /* Built-in plugin of Hvigor. It cannot be modified. */,
   plugins: [
     ossScanPlugin({ format: OutputFormat.MessagePack }),
-  ] /* Scan OHPM deps and generate osslibraries.json at build time. */,
+  ] /* Scan OHPM deps and generate osslibraries.msgpack at build time. */,
 };

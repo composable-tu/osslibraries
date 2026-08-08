@@ -12,6 +12,7 @@
 
 import { util } from '@kit.ArkTS';
 import { common } from '@kit.AbilityKit';
+import { BusinessError } from '@kit.BasicServicesKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { Libs } from '../Libs';
 
@@ -45,8 +46,10 @@ export class LibsLoader {
         return libs;
       }
     } catch (e) {
-      // msgpack 不存在或解析失败，记录后回退到 JSON。
-      hilog.info(LOG_DOMAIN, LOG_TAG, `${MSGPACK_FILE} not available, falling back to ${JSON_FILE}`);
+      // msgpack 不存在或解析失败，记录底层错误后回退到 JSON，便于排查区分「文件缺失」与「解码错误」。
+      const err: BusinessError = e as BusinessError;
+      hilog.warn(LOG_DOMAIN, LOG_TAG,
+        `${MSGPACK_FILE} unavailable (code=${err.code}, msg=${err.message}), falling back to ${JSON_FILE}`);
     }
 
     // --- 2. 回退到 JSON ---
