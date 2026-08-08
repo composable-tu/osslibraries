@@ -16,6 +16,7 @@ import { Developer } from '../entity/Developer';
 import { Organization } from '../entity/Organization';
 import { Scm } from '../entity/Scm';
 import { Funding } from '../entity/Funding';
+import { decode } from '@ohos/msgpack';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 
 /**
@@ -80,9 +81,9 @@ const LOG_DOMAIN: number = 0x0001;
 const LOG_TAG: string = 'OSSLibraries.Parser';
 
 /**
- * 将 OSSLibraries JSON 解析为 Library / License 对象。
+ * 将 OSSLibraries JSON / MessagePack 解析为 Library / License 对象。
  *
- * JSON 结构:
+ * 数据结构（JSON 与 MessagePack 一致）:
  * ```
  * {
  *   "libraries": [ { ..., "licenses": ["hash1", "hash2"] } ],
@@ -99,6 +100,21 @@ export class Parser {
    */
   static parse(json: string): ParseResult {
     const root: JsonRoot = JSON.parse(json) as JsonRoot;
+    return Parser.parseRoot(root);
+  }
+
+  /**
+   * 解析 OSSLibraries 格式的 MessagePack 二进制数据。
+   *
+   * MessagePack 解码后的结构与 JSON 一致（map 解码为对象、array 解码为数组），
+   * 因此可复用同一套解析逻辑。
+   */
+  static parseMsgpack(bytes: Uint8Array): ParseResult {
+    const root: JsonRoot = decode(bytes) as JsonRoot;
+    return Parser.parseRoot(root);
+  }
+
+  private static parseRoot(root: JsonRoot): ParseResult {
     const result: ParseResult = new ParseResult();
 
     // --- 先解析 licenses 映射,后续库条目可据此解析引用 ---

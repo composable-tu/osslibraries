@@ -11,10 +11,9 @@
  */
 
 import { common } from '@kit.AbilityKit';
-import { util } from '@kit.ArkTS';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { ArcList, ArcListItem, ArcListAttribute, ArcListItemAttribute, ComponentContent, LengthMetrics } from '@kit.ArkUI';
-import { Libs, Library, LibsHolder } from 'osslibraries';
+import { Libs, Library, LibsHolder, LibsLoader } from 'osslibraries';
 import { WearLicenseListItem } from '../components/WearLicenseListItem';
 import { LicenseDetailParams } from '../model/RouteParams';
 import { WEAR_ARC_LIST_SIZE, WEAR_ARC_LIST_RADIUS, WEAR_ARC_ITEM_WIDTH, WEAR_ARC_ITEM_RADIUS } from '../constants/WearLayoutConstants';
@@ -55,10 +54,7 @@ export struct OSSLibrariesLicenseListPageWear {
   async loadData(): Promise<void> {
     try {
       const context: common.Context = this.getUIContext().getHostContext() as common.Context;
-      const content: Uint8Array = await context.resourceManager.getRawFileContent('osslibraries.json');
-      const decoder: util.TextDecoder = util.TextDecoder.create('utf-8');
-      const json: string = decoder.decode(content);
-      this.libs = Libs.fromJson(json);
+      this.libs = await LibsLoader.fromRawfile(context);
       LibsHolder.set(this.libs);
       this.isLoaded = true;
     } catch (e) {

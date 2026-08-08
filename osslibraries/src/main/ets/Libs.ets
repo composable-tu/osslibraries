@@ -63,4 +63,14 @@ export class Libs {
     const sorted: Library[] = result.libraries.sort(SortUtil.compareLibraryByName);
     return new Libs(sorted, result.licenses);
   }
+
+  /**
+   * Build a `Libs` instance from MessagePack binary data in OSSLibraries format.
+   * Libraries are sorted by name (case-insensitive).
+   */
+  static fromMsgpack(bytes: Uint8Array): Libs {
+    const result: ParseResult = Parser.parseMsgpack(bytes);
+    const sorted: Library[] = result.libraries.sort(SortUtil.compareLibraryByName);
+    return new Libs(sorted, result.licenses);
+  }
 }

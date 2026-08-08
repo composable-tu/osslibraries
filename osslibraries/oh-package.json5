@@ -1,6 +1,6 @@
 {
   name: "osslibraries",
-  version: "0.0.3",
+  version: "0.0.4",
   description: "适用于 HarmonyOS 的开放源代码许可扫描与展示库 —— 该包是 OSSLibraries 的 Core 部分。",
   main: "Index.ets",
   author: {
@@ -11,5 +11,7 @@
   homepage: "https://github.com/composable-tu/osslibraries",
   repository: "https://github.com/composable-tu/osslibraries",
   keywords: ["osslibraries", "license", "licenses", "open-source", "oss"],
-  dependencies: {},
+  dependencies: {
+    "@ohos/msgpack": "1.0.2",
+  },
 }
