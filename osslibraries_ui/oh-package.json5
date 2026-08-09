@@ -1,6 +1,6 @@
 {
   name: "osslibraries_ui",
-  version: "0.0.6",
+  version: "0.0.7",
   description: "适用于 HarmonyOS 的开放源代码许可扫描与展示库 —— 该包是 OSSLibraries 的预定义 UI 部分。",
   main: "Index.ets",
   author: {
@@ -12,6 +12,6 @@
   repository: "https://github.com/composable-tu/osslibraries",
   keywords: ["osslibraries", "license", "licenses", "open-source", "oss"],
   dependencies: {
-    osslibraries: "^0.0.3",
+    osslibraries: "^0.0.4",
   },
 }

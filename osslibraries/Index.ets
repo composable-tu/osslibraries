@@ -21,4 +21,5 @@ export { Funding } from './src/main/ets/entity/Funding';
 export { Libs } from './src/main/ets/Libs';
 export { Parser, ParseResult } from './src/main/ets/util/Parser';
 export { LibsHolder } from './src/main/ets/util/LibsHolder';
+export { LibsLoader } from './src/main/ets/util/LibsLoader';
 export { SortUtil } from './src/main/ets/util/SortUtil';

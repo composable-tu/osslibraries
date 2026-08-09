@@ -1,0 +1,4 @@
+# 消费者混淆规则：使用本库的宿主应用开启混淆时自动应用。
+# 保留 @ohos/msgpack，避免混淆导致 MessagePack 编解码失效。
+-keep
+./oh_modules/@ohos/msgpack

@@ -90,20 +90,15 @@ this.getUIContext().getRouter().pushNamedRoute({
 ohpm install osslibraries
 ```
 
-然后，在自定义页面中按以下方法读取 `osslibraries.json`：
+`osslibraries` 包负责数据加载与解析。在自定义页面中调用 `LibsLoader.fromRawfile(context)` 即可拿到排好序的 `Libs` 实例：
 
 ```ets
-import { util } from '@kit.ArkTS';
 import { common } from '@kit.AbilityKit';
-import { Libs, LibsHolder } from 'osslibraries';
+import { Libs, LibsHolder, LibsLoader } from 'osslibraries';
 
-// 读 osslibraries.json
 const context: common.Context = this.getUIContext().getHostContext() as common.Context;
-const content: Uint8Array = await context.resourceManager.getRawFileContent('osslibraries.json');
-const json: string = util.TextDecoder.create('utf-8').decode(content);
 
-// 解析 JSON
-const libs: Libs = Libs.fromJson(json);
+const libs: Libs = await LibsLoader.fromRawfile(context);
 
 // 查找某个库
 const lib = libs.findLibrary('@ohos/hypium');

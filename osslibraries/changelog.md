@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.4
+
+- 新增：MessagePack（`osslibraries.msgpack`）解析能力。
+- 新增：`LibsLoader.fromRawfile(context)` 能力，确保 UI 层调用即获取数据。
+
 ## v0.0.3
 
 - 同步 `osslibraries-hvigor-plugin` 上游更改，将 `tag` 字段从 `string` 类型修改为 `string[]` 类型。

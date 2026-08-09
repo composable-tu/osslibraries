@@ -13,7 +13,7 @@ An open source license scanning and display library for HarmonyOS.
 
 - **End-to-end** — scans your dependencies at build time and displays the license list in your app. No manual JSON editing, no drift.
 - **Prebuilt UI pages** — drop-in list and detail pages built on ArkUI & UI Design Kit components.
-- **Custom UI, no problem** — use the core package alone to read `osslibraries.json` and render the license list in any UI you build.
+- **Custom UI, no problem** — use the core package alone to load and parse the license data and render it in any UI you build.
 - **Always up to date** — the Hvigor plugin scans `oh_modules/` on every build. The license list always matches what you ship.
 - **AI-assisted integration** — ships an Agent Skill so an AI can wire the library into your project for you.
 
@@ -141,20 +141,15 @@ You can skip the predefined OSSLibraries UI pages and use the `core` module dire
 ohpm install osslibraries
 ```
 
-Then read `osslibraries.json` in your custom page as follows:
+The core package handles data loading and parsing. In your custom page, call `LibsLoader.fromRawfile(context)` to get a sorted `Libs` instance:
 
 ```ets
-import { util } from '@kit.ArkTS';
 import { common } from '@kit.AbilityKit';
-import { Libs, LibsHolder } from 'osslibraries';
+import { Libs, LibsHolder, LibsLoader } from 'osslibraries';
 
-// Read osslibraries.json
 const context: common.Context = this.getUIContext().getHostContext() as common.Context;
-const content: Uint8Array = await context.resourceManager.getRawFileContent('osslibraries.json');
-const json: string = util.TextDecoder.create('utf-8').decode(content);
 
-// Parse JSON
-const libs: Libs = Libs.fromJson(json);
+const libs: Libs = await LibsLoader.fromRawfile(context);
 
 // Find a library
 const lib = libs.findLibrary('@ohos/hypium');

@@ -10,11 +10,10 @@
  * See the Mulan PSL v2 for more details.
  */
 
-import { util } from '@kit.ArkTS';
 import { common } from '@kit.AbilityKit';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
-import { Libs, LibsHolder, Library } from 'osslibraries';
+import { Libs, LibsHolder, LibsLoader, Library } from 'osslibraries';
 import { LicenseItem } from '../components/LicenseItem';
 import { LicenseDetailParams } from '../model/RouteParams';
 import { buildTitleBarOpts, getMaterialLevel } from '../components/TitleBarBuilder';
@@ -24,7 +23,8 @@ import { hdsMaterial, HdsNavigation, HdsNavigationTitleMode } from '@kit.UIDesig
 /**
  * 开源许可证列表页
  *
- * 数据从 rawfile/osslibraries.json 加载，通过 LibsHolder 跨页面共享。
+ * 数据通过 core 的 LibsLoader 加载（优先 osslibraries.msgpack，回退 osslibraries.json），
+ * 通过 LibsHolder 跨页面共享。
  */
 @Entry({ routeName: 'OSSLibrariesLicenseListPage' })
 @Component
@@ -42,10 +42,7 @@ export struct OSSLibrariesLicenseListPage {
   async loadData(): Promise<void> {
     try {
       const context: common.Context = this.getUIContext().getHostContext() as common.Context;
-      const content: Uint8Array = await context.resourceManager.getRawFileContent('osslibraries.json');
-      const decoder: util.TextDecoder = util.TextDecoder.create('utf-8');
-      const json: string = decoder.decode(content);
-      this.libs = Libs.fromJson(json);
+      this.libs = await LibsLoader.fromRawfile(context);
       LibsHolder.set(this.libs);
       this.isLoaded = true;
     } catch (e) {

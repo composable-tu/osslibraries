@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.3
+
+- 列表页改用 `osslibraries` 的 `LibsLoader.fromRawfile` 加载数据。
+- 更新 `osslibraries` 上游依赖版本至 0.0.4。
+
 ## v0.0.2
 
 - 新增：方形表盘屏幕适配。OSSLibraries UI（Wearable）现在会根据穿戴设备屏幕形态自适应选择显示 ArcList 还是普通 List。

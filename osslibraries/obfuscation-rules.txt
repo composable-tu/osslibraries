@@ -21,3 +21,7 @@
 -enable-toplevel-obfuscation
 -enable-filename-obfuscation
 -enable-export-obfuscation
+
+# 保留 @ohos/msgpack，避免混淆导致 MessagePack 编解码失效
+-keep
+./oh_modules/@ohos/msgpack

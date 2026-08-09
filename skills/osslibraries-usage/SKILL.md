@@ -1,6 +1,6 @@
 ---
 name: "osslibraries-usage"
-description: "Guide for integrating OSSLibraries license scanning & display library in HarmonyOS. Invoke when adding the license list page (phone or wearable UI), configuring the hvigor scan plugin, customizing UI, or troubleshooting osslibraries.json."
+description: "Guide for integrating OSSLibraries license scanning & display library in HarmonyOS. Invoke when adding the license list page (phone or wearable UI), configuring the hvigor scan plugin, customizing UI, or troubleshooting osslibraries.json / osslibraries.msgpack."
 license: "MulanPSL-2.0"
 ---
 
@@ -8,11 +8,11 @@ license: "MulanPSL-2.0"
 
 OSSLibraries is an open-source license scanning and display library for HarmonyOS, distributed as OHPM packages:
 
-- **`osslibraries`** (core): data models, JSON parser, and cross-page holder. Used for custom UI.
+- **`osslibraries`** (core): data models, data loader, JSON / MessagePack parser, and cross-page holder. Used for custom UI.
 - **`osslibraries_ui`**: predefined list page, detail page, and `LicenseItem` component for phone/tablet. Ready out of the box.
 - **`osslibraries_ui_wear`**: predefined list page, detail page, and `WearLicenseListItem` component for wearable devices. Adapts to screen shape via `display.screenShape`: round faces use ArkUI `ArcList` (digital-crown scroll, chain animation), square faces fall back to a regular `List`.
 
-License data is generated at compile time by a standalone Hvigor plugin **`osslibraries-hvigor-plugin`** (npm package) that scans `oh_modules/` and produces `entry/src/main/resources/rawfile/osslibraries.json`.
+License data is generated at compile time by a standalone Hvigor plugin **`osslibraries-hvigor-plugin`** (npm package) that scans `oh_modules/` and produces `entry/src/main/resources/rawfile/osslibraries.json`. The core package's `LibsLoader` prefers `osslibraries.msgpack` (MessagePack binary) when present and falls back to `osslibraries.json`.
 
 ## Cangjie HarmonyOS Support
 
@@ -30,7 +30,7 @@ Two independent blockers apply to this library:
 - The user wants to display an "Open Source Licenses" page in a HarmonyOS app
 - The user wants to integrate the predefined phone UI (`osslibraries_ui`) or wearable UI (`osslibraries_ui_wear`), or build a custom UI (`osslibraries` core)
 - The user wants to configure / troubleshoot the `osslibraries-hvigor-plugin` scan plugin
-- The user wants to read or parse `osslibraries.json`
+- The user wants to read or parse `osslibraries.json` / `osslibraries.msgpack`
 - The user wants to filter self-owned modules out of the license list
 - **Not applicable**: Cangjie HarmonyOS apps are not supported
 
@@ -43,7 +43,7 @@ Confirm the user's intended path before integrating:
 | Predefined pages (phone/tablet)     | `osslibraries_ui`      | Yes                      | Yes (register named routes) |
 | Predefined pages (wearable)         | `osslibraries_ui_wear` | Yes                      | Yes (register named routes) |
 | Fully custom UI                     | `osslibraries`         | Yes                      | No                          |
-| Only read an already-generated JSON | `osslibraries`         | No (JSON already exists) | No                          |
+| Only read an already-generated data file | `osslibraries`         | No (data file already exists) | No                          |
 
 > `osslibraries_ui` and `osslibraries_ui_wear` already depend on `osslibraries`; do not install core separately.
 
@@ -111,23 +111,21 @@ The list page already implements: load JSON → `LibsHolder.set(libs)` → tap a
 
 ```zsh
 ohpm install osslibraries
-# The hvigor plugin is still required to generate the JSON (repeat steps 1–2 of Path A)
+# The hvigor plugin is still required to generate the data file (repeat steps 1–2 of Path A)
 ```
 
-### 2. Read and parse osslibraries.json
+### 2. Load and parse the license data
+
+The core package handles rawfile reading and parsing. Call `LibsLoader.fromRawfile(context)` — it prefers `osslibraries.msgpack` (MessagePack binary, smaller and faster) and falls back to `osslibraries.json` if not found:
 
 ```ets
-import { util } from '@kit.ArkTS';
 import { common } from '@kit.AbilityKit';
-import { Libs, LibsHolder } from 'osslibraries';
+import { Libs, LibsHolder, LibsLoader } from 'osslibraries';
 
-// Read rawfile
 const context: common.Context = this.getUIContext().getHostContext() as common.Context;
-const content: Uint8Array = await context.resourceManager.getRawFileContent('osslibraries.json');
-const json: string = util.TextDecoder.create('utf-8').decode(content);
 
-// Parse (libraries are sorted by name)
-const libs: Libs = Libs.fromJson(json);
+// Prefers osslibraries.msgpack, falls back to osslibraries.json (libraries sorted by name)
+const libs: Libs = await LibsLoader.fromRawfile(context);
 
 // Look up a library
 const lib = libs.findLibrary('@ohos/hypium');
@@ -135,6 +133,8 @@ const lib = libs.findLibrary('@ohos/hypium');
 // Share across pages
 LibsHolder.set(libs);
 ```
+
+Lower-level APIs (use as needed): `Libs.fromJson(json)` / `Parser.parse(json)` for JSON strings, `Libs.fromMsgpack(bytes)` / `Parser.parseMsgpack(bytes)` for MessagePack binary.
 
 ### 3. Reuse predefined components (optional)
 
@@ -222,10 +222,12 @@ this.getUIContext().getRouter().pushNamedRoute({
 | ------------------------------------------------ | ------------- | ------------------------------------------------------------------------ |
 | `Libs`                                           | class         | Main entry point. Holds `libraries: Library[]` and `licenses: License[]` |
 | `Libs.fromJson(json)`                            | static method | Builds from a JSON string; libraries sorted by name                      |
+| `Libs.fromMsgpack(bytes)`                        | static method | Builds from MessagePack binary; libraries sorted by name                 |
 | `libs.findLibrary(uniqueId)`                     | method        | Finds a library by uniqueId; returns `undefined` if not found            |
 | `libs.findLicense(hash)`                         | method        | Finds a license by hash                                                  |
+| `LibsLoader.fromRawfile(context)`                | static method | Loads from rawfile: prefers `osslibraries.msgpack`, falls back to `osslibraries.json` |
 | `LibsHolder`                                     | class         | Static holder; `set(libs)` / `get()` to share across pages               |
-| `Parser` / `ParseResult`                         | class         | Low-level parser; `Libs.fromJson` is usually enough                      |
+| `Parser` / `ParseResult`                         | class         | Low-level parser; `Parser.parse(json)` / `Parser.parseMsgpack(bytes)`    |
 | `SortUtil.compareLibraryByName`                  | method        | Case-insensitive library name comparator                                 |
 | `Library`                                        | class         | Full metadata of a single dependency                                     |
 | `License`                                        | class         | License info; `hash` is the unique key                                   |
@@ -275,7 +277,9 @@ Route names are centralized in `RouteNames.ets` (`UI_LIST_PAGE_ROUTE` / `UI_DETA
 | `WearLicenseListItem`               | Wearable list item component, accepts `@Prop lib: Library`                                     |
 | `LicenseDetailParams`               | Detail page route params interface, field `uniqueId: string` (same shape as `osslibraries_ui`) |
 
-### osslibraries.json structure
+### osslibraries.json / osslibraries.msgpack structure
+
+The JSON and MessagePack files share the same structure (`osslibraries.msgpack` is the MessagePack-encoded form of `osslibraries.json`):
 
 ```json
 {
@@ -312,8 +316,10 @@ Route names are centralized in `RouteNames.ets` (`UI_LIST_PAGE_ROUTE` / `UI_DETA
 
 ### List page is blank / shows "load failed"
 
+The predefined list pages load data via `LibsLoader.fromRawfile(context)`, which prefers `osslibraries.msgpack` and falls back to `osslibraries.json`. If both are missing, the page shows "load failed".
+
 1. Verify `osslibraries-hvigor-plugin` is registered in the target module's `hvigorfile.ts`.
-2. Verify a build has been run and `entry/src/main/resources/rawfile/osslibraries.json` exists and is non-empty.
+2. Verify a build has been run and `entry/src/main/resources/rawfile/osslibraries.json` (or `osslibraries.msgpack`) exists and is non-empty.
 3. Verify `osslibraries_ui` was installed via OHPM (not linked as a local workspace module).
 
 ### Named route navigation fails with "route does not exist"

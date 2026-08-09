@@ -13,7 +13,7 @@
 
 - **端到端** — 从构建时扫描依赖到应用内展示 License 列表，一条链路走通，无需手动维护 JSON。
 - **预定义 UI 页面** — 提供开箱即用的列表页与详情页，基于 ArkUI 和 UI Design Kit 组件。
-- **自定义 UI 亦可** — 可单独使用 Core 包读取 `osslibraries.json`，License 列表的渲染方式完全由你决定。
+- **自定义 UI 亦可** — 可单独使用 Core 包加载并解析许可证数据，License 列表的渲染方式完全由你决定。
 - **始终同步** — Hvigor 插件在每次构建时扫描 `oh_modules/`，License 列表永远跟随实际发布的依赖。
 - **AI 辅助集成** — 提供 Agent Skill，可由 AI 代为完成项目接入。
 
@@ -141,20 +141,15 @@ this.getUIContext().getRouter().pushNamedRoute({
 ohpm install osslibraries
 ```
 
-然后，在自定义页面中按以下方法读取 `osslibraries.json`：
+`osslibraries` 包负责数据加载与解析。在自定义页面中调用 `LibsLoader.fromRawfile(context)` 即可拿到排好序的 `Libs` 实例：
 
 ```ets
-import { util } from '@kit.ArkTS';
 import { common } from '@kit.AbilityKit';
-import { Libs, LibsHolder } from 'osslibraries';
+import { Libs, LibsHolder, LibsLoader } from 'osslibraries';
 
-// 读 osslibraries.json
 const context: common.Context = this.getUIContext().getHostContext() as common.Context;
-const content: Uint8Array = await context.resourceManager.getRawFileContent('osslibraries.json');
-const json: string = util.TextDecoder.create('utf-8').decode(content);
 
-// 解析 JSON
-const libs: Libs = Libs.fromJson(json);
+const libs: Libs = await LibsLoader.fromRawfile(context);
 
 // 查找某个库
 const lib = libs.findLibrary('@ohos/hypium');
