@@ -3,7 +3,8 @@
 ## v0.0.3
 
 - 列表页改用 `osslibraries` 的 `LibsLoader.fromRawfile` 加载数据。
-- 更新 `osslibraries` 上游依赖版本至 0.0.4。
+- 更新 `osslibraries` 上游依赖版本至 0.0.4：
+    - 新增：MessagePack（`osslibraries.msgpack`）解析能力。
 
 ## v0.0.2
 
