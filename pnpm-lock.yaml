@@ -220,7 +220,7 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2(debug@4.4.3)
       osslibraries-hvigor-plugin:
-        specifier: 0.0.7
+        specifier: ^0.0.7
         version: 0.0.7
       vite:
         specifier: npm:@voidzero-dev/vite-plus-core@0.2.8
