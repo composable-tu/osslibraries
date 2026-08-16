@@ -12,7 +12,7 @@
 ## 特性
 
 - **端到端** — 从构建时扫描依赖到应用内展示 License 列表，一条链路走通，无需手动维护 JSON。
-- **预定义 UI 页面** — 提供开箱即用的列表页与详情页，基于 ArkUI 和 UI Design Kit 组件。
+- **预定义 UI 页面** — 提供开箱即用的列表/详情 UI，基于 ArkUI 和 UI Design Kit 组件，且对手机与大屏自适应。
 - **自定义 UI 亦可** — 可单独使用 Core 包加载并解析许可证数据，License 列表的渲染方式完全由你决定。
 - **始终同步** — Hvigor 插件在每次构建时扫描 `oh_modules/`，License 列表永远跟随实际发布的依赖。
 - **AI 辅助集成** — 提供 Agent Skill，可由 AI 代为完成项目接入。
@@ -82,19 +82,18 @@ export default {
 在 `entry` 模块的页面文件顶部（如 `Index.ets`）添加:
 
 ```ets
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseListPage';
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseDetailPage';
+import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicensePage';
 ```
 
 `entry` 模块的 `main_pages.json` 无需改动，只需保留自身页面即可。
 
-### 跳转到许可列表页
+### 跳转到许可页
 
-在应用的任意页面中，通过 `pushNamedRoute` 跳转到列表页:
+在应用的任意页面中，通过 `pushNamedRoute` 跳转到许可页:
 
 ```ets
 this.getUIContext().getRouter().pushNamedRoute({
-  name: 'OSSLibrariesLicenseListPage'
+  name: 'OSSLibrariesLicensePage'
 });
 ```
 

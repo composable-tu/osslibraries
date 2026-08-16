@@ -9,7 +9,7 @@ license: "MulanPSL-2.0"
 OSSLibraries is an open-source license scanning and display library for HarmonyOS, distributed as OHPM packages:
 
 - **`osslibraries`** (core): data models, data loader, JSON / MessagePack parser, and cross-page holder. Used for custom UI.
-- **`osslibraries_ui`**: predefined list page, detail page, and `LicenseItem` component for phone/tablet. Ready out of the box.
+- **`osslibraries_ui`**: a predefined adaptive license page (list + detail) and the `LicenseItem` component for phone/tablet. Ready out of the box.
 - **`osslibraries_ui_wear`**: predefined list page, detail page, and `WearLicenseListItem` component for wearable devices. Adapts to screen shape via `display.screenShape`: round faces use ArkUI `ArcList` (digital-crown scroll, chain animation), square faces fall back to a regular `List`.
 
 License data is generated at compile time by a standalone Hvigor plugin **`osslibraries-hvigor-plugin`** (npm package) that scans `oh_modules/` and produces `entry/src/main/resources/rawfile/osslibraries.json`. The core package's `LibsLoader` prefers `osslibraries.msgpack` (MessagePack binary) when present and falls back to `osslibraries.json`.
@@ -82,28 +82,27 @@ On each build, the plugin scans `oh_modules/` and generates `entry/src/main/reso
 plugins: [ossScanPlugin({ selfModules: ["mylibrary", "3rdlibrary"] })];
 ```
 
-### 3. Import the HAR pages (register named routes)
+### 3. Import the HAR page (register the named route)
 
 At the top of a page file in the `entry` module (e.g. `Index.ets`):
 
 ```ets
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseListPage';
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseDetailPage';
+import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicensePage';
 ```
 
 `entry/src/main/resources/base/profile/main_pages.json` **does not need changes** — keep only its own pages.
 
-### 4. Navigate to the license list page
+### 4. Navigate to the license page
 
 From any page:
 
 ```ets
 this.getUIContext().getRouter().pushNamedRoute({
-  name: 'OSSLibrariesLicenseListPage'
+  name: 'OSSLibrariesLicensePage'
 });
 ```
 
-The list page already implements: load JSON → `LibsHolder.set(libs)` → tap an item to navigate to the detail page.
+The license page already implements: load JSON → `LibsHolder.set(libs)` → tap an item to show the detail.
 
 ## Path B: Custom UI
 
@@ -259,12 +258,12 @@ this.getUIContext().getRouter().pushNamedRoute({
 
 | Name                            | Description                                                  |
 | ------------------------------- | ------------------------------------------------------------ |
-| `OSSLibrariesLicenseListPage`   | List page (named route name is the same)                     |
-| `OSSLibrariesLicenseDetailPage` | Detail page (named route name is the same)                   |
+| `OSSLibrariesLicensePage`       | Adaptive license page (named route name is the same)         |
+| `LicenseDetailView`             | Detail content component for a single library                |
 | `LicenseItem`                   | Single library card component                                |
 | `buildTitleBarOpts`             | HdsNavigation title bar options builder                      |
 | `getMaterialLevel`              | Material level probe                                         |
-| `LicenseDetailParams`           | Detail page route params interface, field `uniqueId: string` |
+| `LicenseDetailParams`           | Detail route params interface, field `uniqueId: string`      |
 
 Route names are centralized in `RouteNames.ets` (`UI_LIST_PAGE_ROUTE` / `UI_DETAIL_PAGE_ROUTE`); host apps should import and reuse these constants instead of string literals.
 
@@ -324,8 +323,8 @@ The predefined list pages load data via `LibsLoader.fromRawfile(context)`, which
 
 ### Named route navigation fails with "route does not exist"
 
-- A loaded page file must `import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseListPage'` at its top — importing registers the named route.
-- Do not add these two pages to `main_pages.json`.
+- A loaded page file must `import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicensePage'` at its top — importing registers the named route.
+- Do not add this page to `main_pages.json`.
 
 ### Self-owned modules appear in the license list
 

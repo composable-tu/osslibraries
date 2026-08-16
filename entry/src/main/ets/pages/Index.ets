@@ -1,5 +1,4 @@
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseListPage';
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseDetailPage';
+import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicensePage';
 import { UI_LIST_PAGE_ROUTE } from 'osslibraries_ui/src/main/ets/constants/RouteNames';
 
 @Entry

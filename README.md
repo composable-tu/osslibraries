@@ -12,7 +12,7 @@ An open source license scanning and display library for HarmonyOS.
 ## Features
 
 - **End-to-end** — scans your dependencies at build time and displays the license list in your app. No manual JSON editing, no drift.
-- **Prebuilt UI pages** — drop-in list and detail pages built on ArkUI & UI Design Kit components.
+- **Prebuilt UI pages** — drop-in list/detail UI built on ArkUI & UI Design Kit, adaptive for both phone and large screens.
 - **Custom UI, no problem** — use the core package alone to load and parse the license data and render it in any UI you build.
 - **Always up to date** — the Hvigor plugin scans `oh_modules/` on every build. The license list always matches what you ship.
 - **AI-assisted integration** — ships an Agent Skill so an AI can wire the library into your project for you.
@@ -77,24 +77,23 @@ export default {
 
 On each build, the plugin scans `oh_modules/` and generates `entry/src/main/resources/rawfile/osslibraries.json`.
 
-### Import the HAR pages (register named routes)
+### Import the HAR page (register the named route)
 
 At the top of a page file in the `entry` module (e.g. `Index.ets`), add:
 
 ```ets
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseListPage';
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseDetailPage';
+import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicensePage';
 ```
 
 No changes are needed in `entry`'s `main_pages.json` — just keep its own pages.
 
-### Navigate to the license list page
+### Navigate to the license page
 
 From any page in your app, navigate via `pushNamedRoute`:
 
 ```ets
 this.getUIContext().getRouter().pushNamedRoute({
-  name: 'OSSLibrariesLicenseListPage'
+  name: 'OSSLibrariesLicensePage'
 });
 ```
 
