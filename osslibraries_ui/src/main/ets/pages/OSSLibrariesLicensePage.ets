@@ -148,7 +148,10 @@ export struct OSSLibrariesLicensePage {
 
   private navigateToDetail(uniqueId: string): void {
     const params: LicenseDetailParams = { uniqueId: uniqueId };
-    if (this.pathStack.size() > 0) {
+    const detailIndexes: Array<number> = this.pathStack.getIndexByName(UI_DETAIL_PAGE_ROUTE);
+    const topIndex: number = this.pathStack.size() - 1;
+    const isDetailOnTop: boolean = detailIndexes.length > 0 && detailIndexes[detailIndexes.length - 1] === topIndex;
+    if (isDetailOnTop) {
       this.pathStack.replacePathByName(UI_DETAIL_PAGE_ROUTE, params);
     } else {
       this.pathStack.pushPathByName(UI_DETAIL_PAGE_ROUTE, params);

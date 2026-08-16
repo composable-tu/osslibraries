@@ -265,7 +265,7 @@ this.getUIContext().getRouter().pushNamedRoute({
 | `getMaterialLevel`              | Material level probe                                         |
 | `LicenseDetailParams`           | Detail route params interface, field `uniqueId: string`      |
 
-Route names are centralized in `RouteNames.ets` (`UI_LIST_PAGE_ROUTE` / `UI_DETAIL_PAGE_ROUTE`); host apps should import and reuse these constants instead of string literals.
+Route names are centralized in `RouteNames.ets`. `UI_LIST_PAGE_ROUTE` is the router-registered entry (`OSSLibrariesLicensePage`) that host apps push via `pushNamedRoute`. `UI_DETAIL_PAGE_ROUTE` is the internal `NavPathStack` destination name used by the page's `navDestination` to render the detail view — it is **not** a router-registered page and host apps generally do not push it directly.
 
 ### ui_wear (`osslibraries_ui_wear`) exports
 
