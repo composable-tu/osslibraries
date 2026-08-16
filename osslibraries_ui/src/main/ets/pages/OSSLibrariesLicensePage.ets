@@ -38,6 +38,7 @@ export struct OSSLibrariesLicensePage {
   @State libs: Libs = new Libs();
   @State errorMsg: string = '';
   @State customMaterialLevel: hdsMaterial.MaterialLevel = hdsMaterial.MaterialLevel.EXQUISITE;
+  @State navigationMode: NavigationMode = NavigationMode.Auto;
 
   aboutToAppear(): void {
     this.customMaterialLevel = getMaterialLevel();
@@ -63,10 +64,14 @@ export struct OSSLibrariesLicensePage {
     }
     .backgroundColor($r('sys.color.background_secondary'))
     .mode(NavigationMode.Auto)
+    .navBarWidth('37.5%')
     .titleMode(HdsNavigationTitleMode.MINI)
     .titleBar(buildTitleBarOpts($r('app.string.osslibraries_title_licenses'), this.customMaterialLevel))
     .hideBackButton(false)
     .navDestination(this.DetailDestination)
+    .onNavigationModeChange((mode: NavigationMode) => {
+      this.navigationMode = mode;
+    })
   }
 
   @Builder
@@ -129,12 +134,16 @@ export struct OSSLibrariesLicensePage {
     .backgroundColor($r('sys.color.background_secondary'))
     .titleMode(HdsNavDestinationTitleMode.MINI)
     .titleBar(buildTitleBarOpts(
-      $r('app.string.osslibraries_title_licenses'),
+      this.navigationMode === NavigationMode.Split
+        ? this.detailTitleOf((pageInfos as LicenseDetailParams).uniqueId)
+        : $r('app.string.osslibraries_title_licenses'),
       this.customMaterialLevel,
       undefined,
-      this.libNameOf((pageInfos as LicenseDetailParams).uniqueId)
+      this.navigationMode === NavigationMode.Split
+        ? undefined
+        : this.libNameOf((pageInfos as LicenseDetailParams).uniqueId)
     ))
-    .hideBackButton(false)
+    .hideBackButton(this.navigationMode === NavigationMode.Split)
   }
 
   private navigateToDetail(uniqueId: string): void {
@@ -144,6 +153,17 @@ export struct OSSLibrariesLicensePage {
     } else {
       this.pathStack.pushPathByName(UI_DETAIL_PAGE_ROUTE, params);
     }
+  }
+
+  /**
+   * 详情页标题栏主标题:大屏分栏下使用库名,未找到或无名时回退到默认标题。
+   */
+  private detailTitleOf(uniqueId: string): Resource | string {
+    const name: string | undefined = this.libNameOf(uniqueId);
+    if (name !== undefined) {
+      return name;
+    }
+    return $r('app.string.osslibraries_title_licenses');
   }
 
   /**
