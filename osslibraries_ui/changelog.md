@@ -2,7 +2,7 @@
 
 ## v0.0.9
 
-- 修复：`navigateToDetail` 覆盖逻辑更安全
+- 优化：使 `navigateToDetail` 覆盖逻辑更安全
 
 ## v0.0.8
 
