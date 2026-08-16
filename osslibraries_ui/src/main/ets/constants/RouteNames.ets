@@ -10,10 +10,10 @@
  * See the Mulan PSL v2 for more details.
  */
 
-/** 手机端命名路由名常量，集中定义以避免拼写错误。 */
+/** 命名路由名常量，集中定义以避免拼写错误。 */
 
-/** 列表页路由名。 */
-export const UI_LIST_PAGE_ROUTE: string = 'OSSLibrariesLicenseListPage';
+/** 自适应容器页路由名（承载列表侧边栏 + 详情目标页）。 */
+export const UI_LIST_PAGE_ROUTE: string = 'OSSLibrariesLicensePage';
 
-/** 详情页路由名（由列表页 push 进入）。 */
+/** 详情目标页路由名（由列表项 pushPathByName 进入，在 navDestination 中渲染）。 */
 export const UI_DETAIL_PAGE_ROUTE: string = 'OSSLibrariesLicenseDetailPage';

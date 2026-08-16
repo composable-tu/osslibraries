@@ -11,33 +11,27 @@
  */
 
 import { Library, License, Libs, LibsHolder } from 'osslibraries';
-import { LicenseDetailParams } from '../model/RouteParams';
-import { buildTitleBarOpts, getMaterialLevel } from '../components/TitleBarBuilder';
-import { hdsMaterial, HdsNavigation, HdsNavigationTitleMode } from '@kit.UIDesignKit';
 import { common } from '@kit.AbilityKit';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 
 /**
- * 开源许可证详情页
+ * 开源许可证详情内容视图。
+ *
+ * 独立于导航容器，供 HdsNavigation 的 navDestination 在手机单栏与大屏分栏下复用。
+ * 通过 LibsHolder 读取跨页面共享的数据。
  */
-@Entry({ routeName: 'OSSLibrariesLicenseDetailPage' })
 @Component
-export struct OSSLibrariesLicenseDetailPage {
+export struct LicenseDetailView {
+  @Prop uniqueId: string = '';
   @State lib: Library = new Library();
   @State notFound: boolean = false;
   @State scmUrl: string = '';
-  @State customMaterialLevel: hdsMaterial.MaterialLevel = hdsMaterial.MaterialLevel.EXQUISITE;
   @State pressedLinkUrls: Set<string> = new Set();
 
   aboutToAppear(): void {
-    this.customMaterialLevel = getMaterialLevel();
-    const params: Object = this.getUIContext().getRouter().getParams() as Object;
-    const detail: LicenseDetailParams = params as LicenseDetailParams;
-    const uniqueId: string = detail?.uniqueId ?? '';
-
     const libs: Libs | undefined = LibsHolder.get();
-    const found: Library | undefined = libs?.findLibrary(uniqueId);
+    const found: Library | undefined = libs?.findLibrary(this.uniqueId);
 
     if (found === undefined) {
       this.notFound = true;
@@ -49,70 +43,59 @@ export struct OSSLibrariesLicenseDetailPage {
   }
 
   build() {
-    HdsNavigation() {
-      if (this.notFound) {
-        Column() {
-          Text($r('app.string.osslibraries_library_not_found'))
-            .fontSize(16)
-            .fontColor($r('sys.color.font_secondary'))
-        }
-        .width('100%')
-        .height('100%')
-        .justifyContent(FlexAlign.Center)
-        .alignItems(HorizontalAlign.Center)
-      } else {
-        List({ space: 0 }) {
-          // 顶部链接卡片:website + 仓库地址
-          if (this.lib.website.length > 0) {
-            ListItem() {
-              this.LinkCard(this.lib.website, $r('sys.symbol.link'))
-            }
-            .onClick(() => {
-              this.openUrl(this.lib.website);
-            }, 5)
-          }
-          if (this.scmUrl.length > 0 && this.scmUrl !== this.lib.website) {
-            ListItem() {
-              this.LinkCard(this.scmUrl, $r('sys.symbol.link'))
-            }
-            .onClick(() => {
-              this.openUrl(this.scmUrl);
-            }, 5)
-          }
-
-          // 许可证全文（仅渲染有正文内容的许可证）
-          ForEach(
-            this.lib.licenses.filter((lic: License) => lic.licenseContent && lic.licenseContent.length > 0),
-            (lic: License) => {
-              ListItem() {
-                this.LicenseContent(lic)
-              }
-            },
-            (lic: License) => lic.hash
-          )
-
-          // 底部留白
-          ListItem() {
-            Column().height(24).width('100%')
-          }
-        }
-        .width('100%')
-        .height('100%')
-        .padding({ left: 16, right: 16, top: 8 })
-        .clip(false)
-        .cachedCount(4, true)
-        .edgeEffect(EdgeEffect.Spring)
+    if (this.notFound) {
+      Column() {
+        Text($r('app.string.osslibraries_library_not_found'))
+          .fontSize(16)
+          .fontColor($r('sys.color.font_secondary'))
       }
+      .width('100%')
+      .height('100%')
+      .justifyContent(FlexAlign.Center)
+      .alignItems(HorizontalAlign.Center)
+    } else {
+      List({ space: 0 }) {
+        // 顶部链接卡片:website + 仓库地址
+        if (this.lib.website.length > 0) {
+          ListItem() {
+            this.LinkCard(this.lib.website, $r('sys.symbol.link'))
+          }
+          .onClick(() => {
+            this.openUrl(this.lib.website);
+          }, 5)
+        }
+        if (this.scmUrl.length > 0 && this.scmUrl !== this.lib.website) {
+          ListItem() {
+            this.LinkCard(this.scmUrl, $r('sys.symbol.link'))
+          }
+          .onClick(() => {
+            this.openUrl(this.scmUrl);
+          }, 5)
+        }
+
+        // 许可证全文（仅渲染有正文内容的许可证）
+        ForEach(
+          this.lib.licenses.filter((lic: License) => lic.licenseContent && lic.licenseContent.length > 0),
+          (lic: License) => {
+            ListItem() {
+              this.LicenseContent(lic)
+            }
+          },
+          (lic: License) => lic.hash
+        )
+
+        // 底部留白
+        ListItem() {
+          Column().height(24).width('100%')
+        }
+      }
+      .width('100%')
+      .height('100%')
+      .padding({ left: 16, right: 16, top: 8 })
+      .clip(false)
+      .cachedCount(4, true)
+      .edgeEffect(EdgeEffect.Spring)
     }
-    .backgroundColor($r('sys.color.background_secondary'))
-    .titleMode(HdsNavigationTitleMode.MINI)
-    .titleBar(buildTitleBarOpts(
-      $r('app.string.osslibraries_title_licenses'),
-      this.customMaterialLevel,
-      undefined,
-      this.lib.name.length > 0 ? this.lib.name : undefined
-    ))
-    .hideBackButton(false)
   }
 
   @Builder
@@ -182,12 +165,12 @@ export struct OSSLibrariesLicenseDetailPage {
         action: 'ohos.want.action.viewData',
         uri: url,
       }).catch((e: BusinessError) => {
-        hilog.error(0x0001, 'OSSLibrariesLicenseDetailPage',
+        hilog.error(0x0001, 'LicenseDetailView',
           `openUrl startAbility failed: code=${e.code}, message=${e.message}`);
       });
     } catch (e) {
       const err: BusinessError = e as BusinessError;
-      hilog.error(0x0001, 'OSSLibrariesLicenseDetailPage', `openUrl failed: code=${err.code}, message=${err.message}`);
+      hilog.error(0x0001, 'LicenseDetailView', `openUrl failed: code=${err.code}, message=${err.message}`);
     }
   }
 }

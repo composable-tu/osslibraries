@@ -66,19 +66,18 @@ export default {
 在 `entry` 模块的页面文件顶部（如 `Index.ets`）添加:
 
 ```ets
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseListPage';
-import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicenseDetailPage';
+import 'osslibraries_ui/src/main/ets/pages/OSSLibrariesLicensePage';
 ```
 
 `entry` 模块的 `main_pages.json` 无需改动，只需保留自身页面即可。
 
-### 跳转到许可列表页
+### 跳转到许可页
 
-在应用的任意页面中，通过 `pushNamedRoute` 跳转到列表页:
+在应用的任意页面中，通过 `pushNamedRoute` 跳转到许可页:
 
 ```ets
 this.getUIContext().getRouter().pushNamedRoute({
-  name: 'OSSLibrariesLicenseListPage'
+  name: 'OSSLibrariesLicensePage'
 });
 ```
 
