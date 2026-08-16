@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.8
+
+- 适配大屏设备，如平板、折叠屏、智慧屏。
+- 该版本存在 API 变更：
+    - 列表页与详情页合并为单个自适应容器页 `OSSLibrariesLicensePage`，替换 `OSSLibrariesLicenseListPage` / `OSSLibrariesLicenseDetailPage`。
+
 ## v0.0.7
 
 - 列表页改用 `osslibraries` 的 `LibsLoader.fromRawfile` 加载数据。
